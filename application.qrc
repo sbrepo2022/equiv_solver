@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/circuit_icons">
+        <file>resources/battery.png</file>
+        <file>resources/capacitor.png</file>
+        <file>resources/dc.png</file>
+        <file>resources/diode.png</file>
+        <file>resources/ground.png</file>
+        <file>resources/inductor.png</file>
+        <file>resources/meter.png</file>
+        <file>resources/resistor.png</file>
+        <file>resources/supply.png</file>
+        <file>resources/voltmeter.png</file>
+    </qresource>
+    <qresource prefix="/tools_icons">
+        <file>resources/tools/erase.png</file>
+        <file>resources/tools/graph.png</file>
+        <file>resources/tools/pencil.png</file>
+        <file>resources/tools/select.png</file>
+    </qresource>
+</RCC>
