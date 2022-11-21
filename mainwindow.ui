@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>EquivSolver</string>
   </property>
+  <property name="statusTip">
+   <string/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
@@ -31,6 +34,9 @@
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="handleWidth">
+       <number>6</number>
       </property>
       <widget class="FieldView" name="circuitGraphicsView">
        <property name="minimumSize">
@@ -56,7 +62,7 @@
           <x>0</x>
           <y>0</y>
           <width>248</width>
-          <height>667</height>
+          <height>665</height>
          </rect>
         </property>
        </widget>
@@ -92,7 +98,7 @@
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuElements">
@@ -110,9 +116,10 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionLoad"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
-    <addaction name="actionLoad"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -133,7 +140,9 @@
     <property name="title">
      <string>Settings</string>
     </property>
-    <addaction name="actionField_Size"/>
+    <addaction name="actionCircuitSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionFieldSettings"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -236,17 +245,17 @@
   </action>
   <action name="actionSave">
    <property name="text">
-    <string>Save</string>
+    <string>Save to file</string>
    </property>
   </action>
   <action name="actionSaveAs">
    <property name="text">
-    <string>Save As</string>
+    <string>Save As ...</string>
    </property>
   </action>
   <action name="actionLoad">
    <property name="text">
-    <string>Load</string>
+    <string>Load from file</string>
    </property>
   </action>
   <action name="actionExit">
@@ -270,6 +279,9 @@
    </property>
    <property name="text">
     <string>Selection</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
    </property>
   </action>
   <action name="actionDraw">
@@ -323,9 +335,19 @@
     <string>Shift+G</string>
    </property>
   </action>
-  <action name="actionField_Size">
+  <action name="actionFieldSettings">
    <property name="text">
-    <string>Field Size</string>
+    <string>Field Settings</string>
+   </property>
+  </action>
+  <action name="actionCircuitSettings">
+   <property name="text">
+    <string>Circuit settings</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New circuit</string>
    </property>
   </action>
  </widget>

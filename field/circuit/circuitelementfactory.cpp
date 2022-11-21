@@ -22,6 +22,10 @@ CircuitBasicElementFactory::CircuitBasicElementFactory(BasicElementType el_type)
         case BasicElementType::L:
             createL();
             break;
+
+    case BasicElementType::Gnd:
+        createGnd();
+        break;
     }
 }
 
@@ -59,4 +63,11 @@ void CircuitBasicElementFactory::createL()
     this->model = new CircuitElementModel();
     this->graphics_item = this->model->createCircuitElementGraphicsItem();
     this->graphics_item->setImage(QImage(":/circuit_icons/resources/inductor.png"));
+}
+
+void CircuitBasicElementFactory::createGnd()
+{
+    this->model = new CircuitElementModel();
+    this->graphics_item = this->model->createCircuitElementGraphicsItem();
+    this->graphics_item->setImage(QImage(":/circuit_icons/resources/ground.png"));
 }

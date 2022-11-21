@@ -8,7 +8,8 @@ enum BasicElementType {
     E,
     R,
     C,
-    L
+    L,
+    Gnd
 };
 
 class CircuitBasicElementFactory
@@ -25,6 +26,7 @@ private:
     void createR();
     void createC();
     void createL();
+    void createGnd();
 };
 
 #endif // CIRCUITELEMENTFACTORY_H

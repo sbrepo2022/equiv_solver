@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QDebug>
+#include <QGraphicsSceneHoverEvent>
 
 #include "../fieldgraphicsitem.h"
 
@@ -21,12 +22,28 @@ public:
 
     QRectF boundingRect() const;
 
+protected:
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
 private:
     GridModel *model;
     qreal line_width;
     QColor line_color;
 
+    // events state
+    QPoint last_hover_cell;
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+signals:
+    void onCellLeave(QPoint);
+    void onCellEnter(QPoint);
+    void onItemEnter();
+    void onItemLeave();
+    void onCellPressed(QPoint);
 
 public slots:
     void setLineWidh(qreal line_width) {this->line_width = line_width;}
@@ -39,20 +56,20 @@ class GridModel : public QObject
     Q_OBJECT
 public:
     explicit GridModel(QObject *parent = nullptr);
+    ~GridModel();
     GridGraphicsItem* createGridGraphicsItem();
 
-    int getWidth() {return this->width;}
-    int getHeight() {return this->height;}
+    QSize getGridSize() {return this->grid_size;}
 
 private:
-    int width;
-    int height;
+    QList<GridGraphicsItem*> graphics_items;
+
+    QSize grid_size;
 
 signals:
 
 public slots:
-    void setWidth(int width) {this->width = width;}
-    void setHeight(int height) {this->height = height;}
+    void setGridSize(const QSize &grid_size) {this->grid_size = grid_size;}
 };
 
 #endif // GRIDMODEL_H

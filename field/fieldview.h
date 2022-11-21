@@ -18,16 +18,14 @@ public:
     explicit FieldView(QWidget *parent = nullptr);
     ~FieldView();
 
-    void setGridGraphicsItem(GridGraphicsItem *grid_graphics_item);
     void addFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
     void removeFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
 
+protected:
+
 private:
-    QGraphicsScene *scene;
-    GridGraphicsItem *grid_graphics_item;
 
 public slots:
-
 };
 
 #endif // FIELDVIEW_H
