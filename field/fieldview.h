@@ -18,8 +18,8 @@ public:
     explicit FieldView(QWidget *parent = nullptr);
     ~FieldView();
 
-    void addFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
-    void removeFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
+    //void addFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
+    //void removeFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
 
 protected:
 

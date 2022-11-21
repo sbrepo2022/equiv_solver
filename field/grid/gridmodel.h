@@ -57,12 +57,12 @@ class GridModel : public QObject
 public:
     explicit GridModel(QObject *parent = nullptr);
     ~GridModel();
-    GridGraphicsItem* createGridGraphicsItem();
+    GridGraphicsItem* getGraphicsItem() {return this->graphics_item;}
 
     QSize getGridSize() {return this->grid_size;}
 
 private:
-    QList<GridGraphicsItem*> graphics_items;
+    GridGraphicsItem* graphics_item;
 
     QSize grid_size;
 

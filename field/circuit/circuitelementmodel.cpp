@@ -4,11 +4,24 @@ CircuitElementGraphicsItem::CircuitElementGraphicsItem(CircuitElementModel *mode
 {
     this->color = QColor(0, 0, 0);
     connect(model, &CircuitElementModel::centerChanged, this, &CircuitElementGraphicsItem::setCenter);
+    this->setCenter(model->getCenter());
 }
 
 CircuitElementGraphicsItem::~CircuitElementGraphicsItem()
 {
-    disconnect(model, &CircuitElementModel::centerChanged, this, &CircuitElementGraphicsItem::setCenter);
+
+}
+
+CircuitElementGraphicsItem* CircuitElementGraphicsItem::clone(CircuitElementModel *model)
+{
+    CircuitElementGraphicsItem *obj_new = new CircuitElementGraphicsItem(model);
+    obj_new->setImage(this->image);
+    obj_new->setColor(this->color);
+    obj_new->setCellSize(this->cell_size);
+    obj_new->setCenter(this->center);
+    obj_new->setVisibility(this->isVisible());
+
+    return obj_new;
 }
 
 QRectF CircuitElementGraphicsItem::boundingRect() const
@@ -91,23 +104,28 @@ void CircuitElementGraphicsItem::setVisibility(bool visible) {
 
 CircuitElementModel::CircuitElementModel(QObject *parent) : QObject(parent)
 {
+    this->id = object_count++;
+
     this->angle = 0;
     this->cells_rect = QRect(0, 0, 1, 1);
+
+    this->graphics_item = new CircuitElementGraphicsItem(this);
+}
+
+CircuitElementModel::CircuitElementModel(const CircuitElementModel &obj)
+{
+    this->id = object_count++;
+
+    this->angle = obj.angle;
+    this->cells_rect = obj.cells_rect;
+    this->center = obj.center;
+    this->graphics_item = obj.graphics_item->clone(this);
 }
 
 CircuitElementModel::~CircuitElementModel()
 {
-
+    delete this->graphics_item;
 }
 
-CircuitElementModel* CircuitElementModel::clone()
-{
+int CircuitElementModel::object_count = 0;
 
-}
-
-CircuitElementGraphicsItem* CircuitElementModel::createCircuitElementGraphicsItem()
-{
-    CircuitElementGraphicsItem* graphics_item = new CircuitElementGraphicsItem(this);
-    this->graphics_items.push_back(graphics_item);
-    return graphics_item;
-}

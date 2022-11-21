@@ -36,7 +36,8 @@ SOURCES += \
     field/grid/gridmodel.cpp \
     field/fieldgraphicsitem.cpp \
     field/circuit/circuitelementmodel.cpp \
-    field/circuit/circuitelementfactory.cpp
+    field/circuit/circuitelementfactory.cpp \
+    startdialog.cpp
 
 HEADERS += \
     circuitsettingsdialog.h \
@@ -49,12 +50,14 @@ HEADERS += \
     field/grid/gridmodel.h \
     field/fieldgraphicsitem.h \
     field/circuit/circuitelementmodel.h \
-    field/circuit/circuitelementfactory.h
+    field/circuit/circuitelementfactory.h \
+    startdialog.h
 
 FORMS += \
         circuitsettingsdialog.ui \
         fieldstyledialog.ui \
-        mainwindow.ui
+        mainwindow.ui \
+    startdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

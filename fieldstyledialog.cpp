@@ -9,8 +9,7 @@ FieldStyleDialog::FieldStyleDialog(FieldController *field_controller, QWidget *p
     ui->setupUi(this);
 
     if (field_controller != nullptr) {
-        ui->cellWidth->setValue(field_controller->getCellSize().width());
-        ui->cellHeight->setValue(field_controller->getCellSize().height());
+        ui->cellSize->setValue(field_controller->getCellSize().width());
     }
 }
 
@@ -21,5 +20,5 @@ FieldStyleDialog::~FieldStyleDialog()
 
 QSizeF FieldStyleDialog::getCellSize()
 {
-    return QSizeF(this->ui->cellWidth->value(), this->ui->cellHeight->value());
+    return QSizeF(this->ui->cellSize->value(), this->ui->cellSize->value());
 }

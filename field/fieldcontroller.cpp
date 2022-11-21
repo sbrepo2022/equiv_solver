@@ -25,18 +25,29 @@ int FieldController::addFieldModel(FieldModel *field_model)
     connect(grid_graphics_item, &GridGraphicsItem::onItemLeave, this, &FieldController::gridItemLeave);
     connect(grid_graphics_item, &GridGraphicsItem::onCellPressed, this, &FieldController::gridCellPressed);
 
-    this->field_models.push_back(field_model);
-    return field_models.count() - 1;
+    this->field_models.insert(field_model->getId(), field_model);
+    return field_model->getId();
 }
 
 FieldModel* FieldController::removeFieldModel(int index)
 {
+    FieldModel *return_model = nullptr;
+    if (this->field_models.contains(index)) {
+        return_model = this->field_models[index];
+        this->field_models.remove(index);
+    }
 
+    if (this->field_models.count() == 0)
+        this->setCurrentFieldModel(-1);
+
+    return return_model;
 }
 
 void FieldController::setCurrentFieldModel(int index)
 {
-    if (index >= 0 && index < this->field_models.count()) {
+    this->detachScene();
+
+    if (this->field_models.contains(index)) {
         this->current_field_model_ind = index;
         if (this->field_view != nullptr) this->field_view->setScene(this->field_models[index]->getScene());
         this->updateScene();
@@ -45,69 +56,85 @@ void FieldController::setCurrentFieldModel(int index)
         this->current_field_model_ind = -1;
         if (this->field_view != nullptr) this->field_view->setScene(nullptr);
     }
+
+    this->attachScene();
 }
 
-void FieldController::setSelectMode()
+FieldModel* FieldController::getCurrentFieldModel()
 {
-    this->cleanLastModeEffects();
+    if (this->field_models.contains(this->current_field_model_ind)) {
+        return this->field_models[this->current_field_model_ind];
+    }
 
-    this->edit_mode = FieldEditMode::SELECT;
+    return nullptr;
 }
 
-void FieldController::setWireMode()
+void FieldController::attachScene()
 {
-    this->cleanLastModeEffects();
-
-    this->edit_mode = FieldEditMode::WIRE;
+    if (this->buffer_graphics_item != nullptr) {
+        FieldModel *field_model = this->getCurrentFieldModel();
+        if (field_model != nullptr) field_model->addFieldGraphicsItem(this->buffer_graphics_item);
+    }
 }
 
-void FieldController::setDeleteMode()
+void FieldController::detachScene()
 {
-    this->cleanLastModeEffects();
-
-    this->edit_mode = FieldEditMode::DELETE;
+    if (this->buffer_graphics_item != nullptr) {
+        FieldModel *field_model = this->getCurrentFieldModel();
+        if (field_model != nullptr) field_model->removeFieldGraphicsItem(this->buffer_graphics_item);
+    }
 }
 
-void FieldController::setDrawElementsMode(CircuitElementModel *model, CircuitElementGraphicsItem *graphics_item) {
-    this->cleanLastModeEffects();
+void FieldController::unsetEditMode()
+{
+    // after DRAW_ELEMENT mode
+    if (this->buffer_element != nullptr) {
+        delete buffer_element;
+        this->buffer_element = nullptr;
+    }
 
-    this->edit_mode = FieldEditMode::DRAW_ELEMENT;
-
-    this->buffer_graphics_item = graphics_item;
-    this->buffer_element = model;
-
-    this->buffer_graphics_item->setCellSize(this->cell_size);
-    this->connectWithGraphicsItem(this->buffer_graphics_item);
-    this->buffer_graphics_item->setColor(QColor(200, 20, 0));
-    this->field_view->addFieldGraphicsItem(this->buffer_graphics_item);
-    this->buffer_graphics_item->setVisibility(false);
+    this->buffer_graphics_item = nullptr;
 }
 
 void FieldController::connectWithGraphicsItem(FieldGraphicsItem *field_graphics_item) {
     connect(this, &FieldController::cellSizeChanged, field_graphics_item, &FieldGraphicsItem::setCellSize);
 }
 
-void FieldController::cleanLastModeEffects()
+void FieldController::setSelectMode()
 {
-    // after DRAW_ELEMENT mode
-    if (this->buffer_graphics_item != nullptr) {
-        this->field_view->removeFieldGraphicsItem(this->buffer_graphics_item);
-        delete this->buffer_graphics_item;
-        this->buffer_graphics_item = nullptr;
-    }
+    this->edit_mode = FieldEditMode::SELECT;
+}
 
-    if (this->buffer_element != nullptr) {
-        delete buffer_element;
-        this->buffer_element = nullptr;
-    }
+void FieldController::setWireMode()
+{
+    this->edit_mode = FieldEditMode::WIRE;
+}
+
+void FieldController::setDeleteMode()
+{
+    this->edit_mode = FieldEditMode::DELETE;
+}
+
+void FieldController::setDrawElementsMode(CircuitElementModel *model)
+{
+    this->edit_mode = FieldEditMode::DRAW_ELEMENT;
+
+    this->buffer_graphics_item = model->getGraphicsItem();
+    this->buffer_element = model;
+    this->buffer_graphics_item->setCellSize(this->cell_size);
+    this->connectWithGraphicsItem(this->buffer_graphics_item);
+    this->buffer_graphics_item->setColor(QColor(200, 20, 0));
+    this->buffer_graphics_item->setVisibility(false);
 }
 
 void FieldController::updateScene()
 {
-    if (this->current_field_model_ind >= 0) this->field_models[this->current_field_model_ind]->updateScene();
+    FieldModel *field_model = this->getCurrentFieldModel();
+    if (field_model != nullptr) field_model->updateScene();
 }
 
-void FieldController::gridCellHover(const QPoint &pos) {
+void FieldController::gridCellHover(const QPoint &pos)
+{
     if (this->edit_mode == FieldEditMode::DRAW_ELEMENT) {
         if (this->buffer_graphics_item != nullptr) {
             this->buffer_graphics_item->setCenter(pos);
@@ -138,7 +165,11 @@ void FieldController::gridCellPressed(const QPoint &pos)
 {
     if (this->edit_mode == FieldEditMode::DRAW_ELEMENT) {
         if (this->buffer_element != nullptr) {
-            // write there cloning buffer into field
+            FieldModel *field_model = this->getCurrentFieldModel();
+            CircuitElementModel *circuit_element = new CircuitElementModel(*(this->buffer_element));
+            field_model->addCircuitElement(circuit_element);
+            circuit_element->setCenter(pos);
+            this->connectWithGraphicsItem(circuit_element->getGraphicsItem());
         }
     }
 }

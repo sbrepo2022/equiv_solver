@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>350</width>
     <height>150</height>
    </rect>
   </property>
@@ -49,39 +49,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="cellWidth">
-           <property name="decimals">
-            <number>1</number>
-           </property>
-           <property name="minimum">
-            <double>8.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>128.000000000000000</double>
-           </property>
-           <property name="singleStep">
-            <double>8.000000000000000</double>
-           </property>
-           <property name="stepType">
-            <enum>QAbstractSpinBox::DefaultStepType</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="labelX">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>x</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QDoubleSpinBox" name="cellHeight">
+          <widget class="QDoubleSpinBox" name="cellSize">
            <property name="decimals">
             <number>1</number>
            </property>

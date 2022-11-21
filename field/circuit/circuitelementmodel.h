@@ -22,6 +22,8 @@ public:
     explicit CircuitElementGraphicsItem(CircuitElementModel *model, QObject *parent = nullptr);
     ~CircuitElementGraphicsItem();
 
+    CircuitElementGraphicsItem* clone(CircuitElementModel *model);
+
     QRectF boundingRect() const;
 
 private:
@@ -51,16 +53,22 @@ class CircuitElementModel : public QObject
 
 public:
     explicit CircuitElementModel(QObject *parent = nullptr);
+    CircuitElementModel(const CircuitElementModel &obj);
     ~CircuitElementModel();
-    CircuitElementGraphicsItem* createCircuitElementGraphicsItem();
+
+    int getId() {return this->id;}
+
+    CircuitElementGraphicsItem* getGraphicsItem() {return this->graphics_item;}
 
     int getAngle() {return this->angle;}
     QRect getCellsRect() {return this->cells_rect;}
-
-    CircuitElementModel* clone();
+    QPoint getCenter() {return this->center;}
 
 private:
-    QList<CircuitElementGraphicsItem*> graphics_items;
+    static int object_count;
+    int id;
+
+    CircuitElementGraphicsItem* graphics_item;
 
     int angle; // 0, 1, 2 or 3
     QRect cells_rect;

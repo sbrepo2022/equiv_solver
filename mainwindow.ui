@@ -16,6 +16,9 @@
   <property name="statusTip">
    <string/>
   </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
@@ -62,7 +65,7 @@
           <x>0</x>
           <y>0</y>
           <width>248</width>
-          <height>665</height>
+          <height>650</height>
          </rect>
         </property>
        </widget>
@@ -98,7 +101,7 @@
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuElements">
@@ -162,7 +165,7 @@
      <normaloff>:/circuit_icons/resources/dc.png</normaloff>:/circuit_icons/resources/dc.png</iconset>
    </property>
    <property name="text">
-    <string>I (Currency Source)</string>
+    <string>I (Currency)</string>
    </property>
    <property name="toolTip">
     <string>I (Currency Source)</string>
@@ -180,10 +183,10 @@
      <normaloff>:/circuit_icons/resources/battery.png</normaloff>:/circuit_icons/resources/battery.png</iconset>
    </property>
    <property name="text">
-    <string>E (Battery Source)</string>
+    <string>E (Voltage)</string>
    </property>
    <property name="toolTip">
-    <string>E (Battery Source)</string>
+    <string>E (Voltage Source)</string>
    </property>
    <property name="shortcut">
     <string>Shift+E</string>
@@ -234,10 +237,10 @@
      <normaloff>:/circuit_icons/resources/inductor.png</normaloff>:/circuit_icons/resources/inductor.png</iconset>
    </property>
    <property name="text">
-    <string>L (Inductior)</string>
+    <string>L (Inductor)</string>
    </property>
    <property name="toolTip">
-    <string>L (Inductior)</string>
+    <string>L (Inductor)</string>
    </property>
    <property name="shortcut">
     <string>Shift+L</string>
@@ -293,7 +296,10 @@
      <normaloff>:/tools_icons/resources/tools/pencil.png</normaloff>:/tools_icons/resources/tools/pencil.png</iconset>
    </property>
    <property name="text">
-    <string>Draw</string>
+    <string>Draw wire</string>
+   </property>
+   <property name="toolTip">
+    <string>Draw wire</string>
    </property>
   </action>
   <action name="actionDelete">

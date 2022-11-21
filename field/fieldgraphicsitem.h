@@ -19,7 +19,7 @@ protected:
 signals:
 
 public slots:
-    void setCellSize(const QSizeF &cell_size);
+    virtual void setCellSize(const QSizeF &cell_size);
 };
 
 #endif // FIELDGRAPHICSITEM_H

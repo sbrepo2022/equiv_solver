@@ -2,6 +2,7 @@
 #define FIELDCONTROLLER_H
 
 #include <QObject>
+#include <QMap>
 #include <QDebug>
 
 #include "fieldview.h"
@@ -27,13 +28,22 @@ public:
     int addFieldModel(FieldModel *field_model); // returning local index
     FieldModel* removeFieldModel(int index);
     void setCurrentFieldModel(int index);
+    FieldModel* getCurrentFieldModel();
     FieldModel* getFieldModelByIndex(int index) {return this->field_models[index];}
 
     // get setting parameters
-    QSizeF getGridSize() {return this->field_models[this->current_field_model_ind]->getGridSize();}
+    QSizeF getGridSize() {
+        FieldModel *field_model = this->getCurrentFieldModel();
+        if (field_model != nullptr) return field_model->getGridSize();
+        return QSizeF(0, 0);
+    }
     QSizeF getCellSize() {return this->cell_size;}
 
-    void setDrawElementsMode(CircuitElementModel *model, CircuitElementGraphicsItem *graphics_item);
+    // operations with editing mode
+    void attachScene();
+    void detachScene();
+    void unsetEditMode();
+    void setDrawElementsMode(CircuitElementModel *model);
     void setSelectMode();
     void setWireMode();
     void setDeleteMode();
@@ -42,7 +52,7 @@ private:
     FieldView *field_view;
     FieldEditMode edit_mode = FieldEditMode::SELECT;
 
-    QList<FieldModel*> field_models;
+    QMap<int, FieldModel*> field_models;
     int current_field_model_ind;
     QSizeF cell_size;
 
@@ -50,7 +60,6 @@ private:
     CircuitElementGraphicsItem *buffer_graphics_item;
 
     void connectWithGraphicsItem(FieldGraphicsItem*);
-    void cleanLastModeEffects();
 
 signals:
     void gridSizeChanged(QSize);

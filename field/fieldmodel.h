@@ -2,6 +2,7 @@
 #define FIELDMODEL_H
 
 #include <QObject>
+#include <QMap>
 #include <QGraphicsScene>
 
 #include "grid/gridmodel.h"
@@ -14,6 +15,7 @@ public:
     explicit FieldModel(QObject *parent = nullptr);
     ~FieldModel();
 
+    int getId() {return this->id;}
     QGraphicsScene* getScene() {return this->scene;}
 
     QSize getGridSize() {return this->grid_model->getGridSize();}
@@ -21,11 +23,19 @@ public:
 
     GridGraphicsItem* getGridGraphicsItem() {return this->grid_graphics_item;}
 
+    void addFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
+    void removeFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);
+
+    void addCircuitElement(CircuitElementModel *circuit_element);
+
 private:
+    static int object_count;
+
+    int id;
     QGraphicsScene *scene;
     GridModel *grid_model;
     GridGraphicsItem *grid_graphics_item;
-    QList <CircuitElementModel*> circuit_elements;
+    QMap <int, CircuitElementModel*> circuit_elements;
 
 public slots:
     void updateScene();

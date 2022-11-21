@@ -32,6 +32,7 @@ private:
 
 public slots:
     void onModelsTabIndexChanged(int tab_index);
+    void onModelsTabRemove(int tab_index);
 };
 
 #endif // MAINWINDOW_H
