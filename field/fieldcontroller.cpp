@@ -6,7 +6,7 @@ FieldController::FieldController(FieldView *field_view, QObject *parent) :
     QObject(parent),
     field_view(field_view),
     current_field_model_ind(-1),
-    cell_size(QSizeF(64, 64)),
+    cell_size(QSizeF(16, 16)),
     buffer_element(nullptr),
     buffer_graphics_item(nullptr)
 {

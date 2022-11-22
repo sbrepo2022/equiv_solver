@@ -38,6 +38,8 @@ private:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    QPoint getCellByMousePos(const QPointF &pos);
+
 signals:
     void onCellLeave(QPoint);
     void onCellEnter(QPoint);

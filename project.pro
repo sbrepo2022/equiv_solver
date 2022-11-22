@@ -28,6 +28,7 @@ SOURCES += \
     circuitsettingsdialog.cpp \
     field/fieldfactory.cpp \
     field/fieldmodel.cpp \
+    field/wire/wiremodel.cpp \
     fieldstyledialog.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     circuitsettingsdialog.h \
     field/fieldfactory.h \
     field/fieldmodel.h \
+    field/wire/wiremodel.h \
     fieldstyledialog.h \
         mainwindow.h \
         field/fieldview.h \

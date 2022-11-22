@@ -33,6 +33,7 @@ CircuitBasicElementFactory::CircuitBasicElementFactory(BasicElementType el_type)
 void CircuitBasicElementFactory::createI()
 {
     this->model = new CircuitElementModel();
+    this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
     this->graphics_item->setImage(QImage(":/circuit_icons/resources/dc.png"));
 }
@@ -40,6 +41,7 @@ void CircuitBasicElementFactory::createI()
 void CircuitBasicElementFactory::createE()
 {
     this->model = new CircuitElementModel();
+    this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
     this->graphics_item->setImage(QImage(":/circuit_icons/resources/battery.png"));
 }
@@ -47,6 +49,7 @@ void CircuitBasicElementFactory::createE()
 void CircuitBasicElementFactory::createR()
 {
     this->model = new CircuitElementModel();
+    this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
     this->graphics_item->setImage(QImage(":/circuit_icons/resources/resistor.png"));
 }
@@ -54,6 +57,7 @@ void CircuitBasicElementFactory::createR()
 void CircuitBasicElementFactory::createC()
 {
     this->model = new CircuitElementModel();
+    this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
     this->graphics_item->setImage(QImage(":/circuit_icons/resources/capacitor.png"));
 }
@@ -61,6 +65,7 @@ void CircuitBasicElementFactory::createC()
 void CircuitBasicElementFactory::createL()
 {
     this->model = new CircuitElementModel();
+    this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
     this->graphics_item->setImage(QImage(":/circuit_icons/resources/inductor.png"));
 }
@@ -68,6 +73,7 @@ void CircuitBasicElementFactory::createL()
 void CircuitBasicElementFactory::createGnd()
 {
     this->model = new CircuitElementModel();
+    this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
     this->graphics_item->setImage(QImage(":/circuit_icons/resources/ground.png"));
 }

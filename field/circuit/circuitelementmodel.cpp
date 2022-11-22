@@ -31,12 +31,12 @@ QRectF CircuitElementGraphicsItem::boundingRect() const
     QRect cells_rect = this->model->getCellsRect();
     return QRectF(
         QPointF(
-            (-0.5 + cells_rect.left()) * cell_width,
-            (-0.5 + cells_rect.top()) * cell_height
+            cells_rect.left() * cell_width,
+            cells_rect.top() * cell_height
         ),
         QPointF(
-            (0.5 + cells_rect.right()) * cell_width,
-            (0.5 + cells_rect.bottom()) * cell_height
+            (cells_rect.left() + cells_rect.width()) * cell_width,
+            (cells_rect.top() + cells_rect.height()) * cell_height
         )
     );
 }

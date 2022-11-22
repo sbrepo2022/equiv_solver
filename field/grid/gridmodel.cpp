@@ -14,10 +14,15 @@ GridGraphicsItem::~GridGraphicsItem()
 
 }
 
+QPoint GridGraphicsItem::getCellByMousePos(const QPointF &pos)
+{
+    return QPoint(pos.x() / this->cell_size.width(), pos.y() / this->cell_size.height());
+}
+
 void GridGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
     QPointF pos = event->pos();
-    QPoint cur_hover_cell = QPoint(pos.x() / this->cell_size.width(), pos.y() / this->cell_size.height());
+    QPoint cur_hover_cell = getCellByMousePos(pos);
     if (cur_hover_cell != this->last_hover_cell) {
         emit onCellLeave(this->last_hover_cell);
         emit onCellEnter(cur_hover_cell);
@@ -42,31 +47,41 @@ void GridGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 
 void GridGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QPointF pos = event->pos();
-    QPoint cur_pressed_cell = QPoint(pos.x() / this->cell_size.width(), pos.y() / this->cell_size.height());
+    QPoint cur_pressed_cell = getCellByMousePos(pos);
     emit onCellPressed(cur_pressed_cell);
 }
 
 void GridGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QPen penLines(this->line_color, this->line_width, Qt::SolidLine, Qt::SquareCap);
+    QPen penLines(this->line_color, 1, Qt::SolidLine, Qt::SquareCap);
     painter->setPen(penLines);
 
     qreal cell_width = this->cell_size.width();
     qreal cell_height = this->cell_size.height();
 
-    for (int x = 0; x < this->model->getGridSize().width() - 1; x++) {
+    for (int x = 0; x < this->model->getGridSize().width(); x++) {
         painter->drawLine(
-            QPointF(x * cell_width + cell_width, 0),
-            QPointF(x * cell_width + cell_width, this->model->getGridSize().height() * cell_height)
+            QPointF(x * cell_width + cell_width * 0.5, 0),
+            QPointF(x * cell_width + cell_width * 0.5, this->model->getGridSize().height() * cell_height)
         );
     }
 
-    for (int y = 0; y < this->model->getGridSize().height() - 1; y++) {
+    for (int y = 0; y < this->model->getGridSize().height(); y++) {
         painter->drawLine(
-            QPointF(0, y * cell_height + cell_height),
-            QPointF(this->model->getGridSize().width() * cell_width, y * cell_height + cell_height)
+            QPointF(0, y * cell_height + cell_height * 0.5),
+            QPointF(this->model->getGridSize().width() * cell_width, y * cell_height + cell_height * 0.5)
         );
     }
+
+    /*
+    for (int x = 0; x < this->model->getGridSize().width(); x++) {
+        for (int y = 0; y < this->model->getGridSize().height(); y++) {
+            painter->drawPoint(
+                QPointF(x * cell_width + cell_width * 0.5, y * cell_height + cell_height * 0.5)
+            );
+        }
+    }
+    */
 
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -83,7 +98,7 @@ QRectF GridGraphicsItem::boundingRect() const
 
 GridModel::GridModel(QObject *parent) : QObject(parent)
 {
-    this->grid_size = QSize(20, 20);
+    this->grid_size = QSize(80, 80);
 
     this->graphics_item = new GridGraphicsItem(this);
 }
