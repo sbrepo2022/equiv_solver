@@ -98,7 +98,7 @@ QRectF GridGraphicsItem::boundingRect() const
 
 GridModel::GridModel(QObject *parent) : QObject(parent)
 {
-    this->grid_size = QSize(80, 80);
+    this->grid_size = QSize(250, 250);
 
     this->graphics_item = new GridGraphicsItem(this);
 }

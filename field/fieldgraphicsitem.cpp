@@ -5,6 +5,7 @@ FieldGraphicsItem::FieldGraphicsItem(QObject *parent) :
     QGraphicsItem()
 {
     this->cell_size = QSizeF(32, 32);
+    this->debug = false;
 }
 
 void FieldGraphicsItem::setCellSize(const QSizeF &cell_size) {

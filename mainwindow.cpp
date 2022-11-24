@@ -23,69 +23,44 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     connect(ui->actionSelection, &QAction::toggled, this, [=]() {
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setSelectMode();
-        field_controller->attachScene();
     });
     connect(ui->actionDraw, &QAction::toggled, this, [=]() {
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setWireMode();
-        field_controller->attachScene();
     });
     connect(ui->actionDelete, &QAction::toggled, this, [=]() {
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setDeleteMode();
-        field_controller->attachScene();
     });
 
     connect(ui->actionI, &QAction::toggled, this, [=]() {
         CircuitBasicElementFactory el_factory(BasicElementType::I);
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setDrawElementsMode(el_factory.model);
-        field_controller->attachScene();
     });
     connect(ui->actionE, &QAction::toggled, this, [=]() {
         CircuitBasicElementFactory el_factory(BasicElementType::E);
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setDrawElementsMode(el_factory.model);
-        field_controller->attachScene();
     });
     connect(ui->actionR, &QAction::toggled, this, [=]() {
         CircuitBasicElementFactory el_factory(BasicElementType::R);
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setDrawElementsMode(el_factory.model);
-        field_controller->attachScene();
     });
     connect(ui->actionC, &QAction::toggled, this, [=]() {
         CircuitBasicElementFactory el_factory(BasicElementType::C);
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setDrawElementsMode(el_factory.model);
-        field_controller->attachScene();
     });
     connect(ui->actionL, &QAction::toggled, this, [=]() {
         CircuitBasicElementFactory el_factory(BasicElementType::L);
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setDrawElementsMode(el_factory.model);
-        field_controller->attachScene();
     });
     connect(ui->actionGnd, &QAction::toggled, this, [=]() {
         CircuitBasicElementFactory el_factory(BasicElementType::Gnd);
-        field_controller->detachScene();
-        field_controller->unsetEditMode();
         field_controller->setDrawElementsMode(el_factory.model);
-        field_controller->attachScene();
     });
 
     connect(ui->actionFieldSettings, &QAction::triggered, this->field_controller, &FieldController::showFieldSettingsDialog);
     connect(ui->actionCircuitSettings, &QAction::triggered, this->field_controller, &FieldController::showCircuitSettingsDialog);
+
+    this->connectDebug();
 }
 
 MainWindow::~MainWindow()
@@ -128,3 +103,14 @@ void MainWindow::onModelsTabRemove(int tab_index)
     this->field_controller->removeFieldModel(model_index);
     this->field_models_tabs->removeTab(tab_index);
 }
+
+
+//---------------------------TESTS-------------------------------//
+
+
+void MainWindow::connectDebug()
+{
+    connect(ui->actionGraphicsItemDebug, &QAction::toggled, field_controller, &FieldController::graphicsItemDebugChanged);
+}
+
+

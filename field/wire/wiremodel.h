@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QRect>
 #include <QPainter>
+#include <QDebug>
 
 #include "../fieldgraphicsitem.h"
 
@@ -58,7 +59,6 @@ private:
 
     QPointF updatedPos();
 
-    QLineF getLineWithWireDirection(QPoint start_point, WireDirection wire_direction);
 
 public slots:
     void setCellSize(const QSizeF &cell_size);
@@ -66,6 +66,7 @@ public slots:
     void setLineColor(const QColor &line_color);
     void setLineWidth(qreal width);
     void setVisibility(bool visible);
+    void paramsUpdated();
 };
 
 
@@ -83,8 +84,8 @@ public:
 
     QRect getCellsRect() {return this->cells_rect;}
     QPoint getCenter() {return this->center;}
-    WireDirection getFirstDirection() {return this->first_direction;}
-    WireDirection getSecondDirection() {return this->second_direction;}
+    QPolygon getPoints() {return this->points;}
+    QPoint convertPointToLocal(const QPoint &point) {return point - this->center;}
 
 private:
     static int object_count;
@@ -94,11 +95,13 @@ private:
 
     QRect cells_rect;
     QPoint center;
-    WireDirection first_direction;
-    WireDirection second_direction;
+    QPolygon points;
+
+    void updateCellsRect();
 
 signals:
     void centerChanged(QPoint);
+    void pointsChanged();
 
 public slots:
     void setCellsRect(const QRect &cells_rect) {this->cells_rect = cells_rect;}
@@ -106,8 +109,11 @@ public slots:
         this->center = center;
         emit centerChanged(this->center);
     }
-    void setFirstDirection(WireDirection first_direction) {this->first_direction = first_direction;}
-    void setSecondDirection(WireDirection second_direction) {this->second_direction = second_direction;}
+    void setPoints(const QPolygon &points) {
+        this->points = points;
+        this->updateCellsRect();
+        emit pointsChanged();
+    }
 
 };
 

@@ -9,6 +9,13 @@
 #include "fieldmodel.h"
 #include "circuit/circuitelementmodel.h"
 #include "circuit/circuitelementfactory.h"
+#include "wire/wiremodel.h"
+
+#include "edit_modes/fieldeditmodecontroller.h"
+#include "edit_modes/fieldselectmodecontroller.h"
+#include "edit_modes/fieldwiremodecontroller.h"
+#include "edit_modes/fielddeletemodecontroller.h"
+#include "edit_modes/fielddrawelementmodecontroller.h"
 
 enum FieldEditMode {
     SELECT,
@@ -26,10 +33,10 @@ public:
 
     // operations with field models
     int addFieldModel(FieldModel *field_model); // returning local index
-    FieldModel* removeFieldModel(int index);
-    void setCurrentFieldModel(int index);
+    FieldModel* removeFieldModel(int id);
+    void setCurrentFieldModel(int id);
     FieldModel* getCurrentFieldModel();
-    FieldModel* getFieldModelByIndex(int index) {return this->field_models[index];}
+    FieldModel* getFieldModelByid(int id) {return this->field_models[id];}
 
     // get setting parameters
     QSizeF getGridSize() {
@@ -40,25 +47,27 @@ public:
     QSizeF getCellSize() {return this->cell_size;}
 
     // operations with editing mode
-    void attachScene();
-    void detachScene();
-    void unsetEditMode();
-    void setDrawElementsMode(CircuitElementModel *model);
+    void detachFieldModel();
+    void attachFieldModel();
     void setSelectMode();
     void setWireMode();
     void setDeleteMode();
+    void setDrawElementsMode(CircuitElementModel *model);
 
 private:
     FieldView *field_view;
     FieldEditMode edit_mode = FieldEditMode::SELECT;
 
+    // field model
     QMap<int, FieldModel*> field_models;
-    int current_field_model_ind;
+    int current_field_model_id;
     QSizeF cell_size;
 
-    CircuitElementModel *buffer_element;
-    CircuitElementGraphicsItem *buffer_graphics_item;
+    // edit mode
+    FieldEditModeController *edit_mode_controller;
+    QMap<FieldEditMode, FieldEditModeController*> avail_edit_modes;
 
+    void registerEditModes();
     void connectWithGraphicsItem(FieldGraphicsItem*);
 
 signals:
@@ -68,7 +77,7 @@ signals:
 public slots:
     // change settings slots
     void setGridSize(const QSize &grid_size) {
-        if (this->current_field_model_ind >= 0) this->field_models[this->current_field_model_ind]->setGridSize(grid_size);
+        if (this->current_field_model_id >= 0) this->field_models[this->current_field_model_id]->setGridSize(grid_size);
         emit gridSizeChanged(grid_size);
     }
     void setCellSize(const QSizeF &cell_size) {
@@ -77,15 +86,14 @@ public slots:
     }
     void updateScene();
 
-    // events processing slots
-    void gridCellHover(const QPoint &pos);
-    void gridItemEnter();
-    void gridItemLeave();
-    void gridCellPressed(const QPoint &pos);
-
     // show dialogs slots
     void showFieldSettingsDialog();
     void showCircuitSettingsDialog();
+
+
+// -- DEBUG --
+signals:
+    void graphicsItemDebugChanged(bool);
 };
 
 #endif // FIELDCONTROLLER_H

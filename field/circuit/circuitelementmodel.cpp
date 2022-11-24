@@ -50,6 +50,12 @@ void CircuitElementGraphicsItem::paint(QPainter *painter, const QStyleOptionGrap
     QRect target = this->boundingRect().toRect();
     painter->drawImage(target, this->draw_px);
 
+    if (this->debug) {
+        QPen debugLines(QColor(255, 0, 0), 1, Qt::DashLine, Qt::SquareCap);
+        painter->setPen(debugLines);
+        painter->drawRect(this->boundingRect());
+    }
+
     Q_UNUSED(option)
     Q_UNUSED(widget)
 }

@@ -72,7 +72,7 @@
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuElements">
@@ -118,11 +118,18 @@
     <addaction name="separator"/>
     <addaction name="actionFieldSettings"/>
    </widget>
+   <widget class="QMenu" name="menuTests">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionGraphicsItemDebug"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuElements"/>
    <addaction name="menuSettings"/>
    <addaction name="menuSolver"/>
+   <addaction name="menuTests"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget_2">
    <property name="minimumSize">
@@ -337,6 +344,17 @@
   <action name="actionNew">
    <property name="text">
     <string>New circuit</string>
+   </property>
+  </action>
+  <action name="actionGraphicsItemDebug">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>GraphicsItem debug</string>
+   </property>
+   <property name="toolTip">
+    <string>GraphicsItem debug</string>
    </property>
   </action>
  </widget>

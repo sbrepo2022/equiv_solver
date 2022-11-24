@@ -38,7 +38,12 @@ SOURCES += \
     field/fieldgraphicsitem.cpp \
     field/circuit/circuitelementmodel.cpp \
     field/circuit/circuitelementfactory.cpp \
-    startdialog.cpp
+    startdialog.cpp \
+    field/edit_modes/fieldeditmodecontroller.cpp \
+    field/edit_modes/fieldselectmodecontroller.cpp \
+    field/edit_modes/fieldwiremodecontroller.cpp \
+    field/edit_modes/fielddeletemodecontroller.cpp \
+    field/edit_modes/fielddrawelementmodecontroller.cpp
 
 HEADERS += \
     circuitsettingsdialog.h \
@@ -53,7 +58,12 @@ HEADERS += \
     field/fieldgraphicsitem.h \
     field/circuit/circuitelementmodel.h \
     field/circuit/circuitelementfactory.h \
-    startdialog.h
+    startdialog.h \
+    field/edit_modes/fieldeditmodecontroller.h \
+    field/edit_modes/fieldselectmodecontroller.h \
+    field/edit_modes/fieldwiremodecontroller.h \
+    field/edit_modes/fielddeletemodecontroller.h \
+    field/edit_modes/fielddrawelementmodecontroller.h
 
 FORMS += \
         circuitsettingsdialog.ui \

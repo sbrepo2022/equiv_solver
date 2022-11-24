@@ -3,8 +3,9 @@
 WireGraphicsItem::WireGraphicsItem(WireModel *model, QObject *parent) : FieldGraphicsItem (parent), model(model)
 {
     this->line_color = QColor(0, 0, 0);
-    this->line_width = 3;
+    this->line_width = 4;
     connect(model, &WireModel::centerChanged, this, &WireGraphicsItem::setCenter);
+    connect(model, &WireModel::pointsChanged, this, &WireGraphicsItem::paramsUpdated);
     this->setCenter(model->getCenter());
 }
 
@@ -32,8 +33,8 @@ QRectF WireGraphicsItem::boundingRect() const  // ????
     QRect cells_rect = this->model->getCellsRect();
     return QRectF(
         QPointF(
-            cells_rect.left() * cell_width,
-            cells_rect.top() * cell_height
+            (cells_rect.left() - 1) * cell_width,
+            (cells_rect.top() - 1) * cell_height
         ),
         QPointF(
             (cells_rect.left() + cells_rect.width()) * cell_width,
@@ -42,56 +43,29 @@ QRectF WireGraphicsItem::boundingRect() const  // ????
     );
 }
 
-QPointF WireGraphicsItem::updatedPos() { // ???
+QPointF WireGraphicsItem::updatedPos() {
     return QPointF(this->cell_size.width() * (0.5 + this->center.x()), this->cell_size.height() * (0.5 + this->center.y()));
 }
 
-void WireGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) // ???
+void WireGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QPen penLines(this->line_color, this->line_width, Qt::SolidLine, Qt::RoundCap);
+    QPen penLines(this->line_color, this->line_width, Qt::SolidLine, Qt::SquareCap);
     painter->setPen(penLines);
 
-    qreal cell_width = this->cell_size.width();
-    qreal cell_height = this->cell_size.height();
+    QPolygonF polyline_f = this->model->getPoints();
+    QTransform transform;
+    transform = transform.scale(this->cell_size.width(),this->cell_size.height());
+    QPolygonF polyline_f_2 = transform.map(polyline_f);
+    painter->drawPolyline(polyline_f_2);
 
-    WireDirection first_direction = this->model->getFirstDirection();
-    WireDirection second_direction = this->model->getSecondDirection();
-    QLineF first_line = this->getLineWithWireDirection(this->model->getCenter(), first_direction);
-    QLineF second_line = this->getLineWithWireDirection(first_line.p2(), second_direction);
-
-    painter->drawLine(first_line);
-    painter->drawLine(second_line);
-
+    if (this->debug) {
+        QPen debugLines(QColor(255, 0, 0), 1, Qt::DashLine, Qt::SquareCap);
+        painter->setPen(debugLines);
+        painter->drawRect(this->boundingRect());
+    }
 
     Q_UNUSED(option)
     Q_UNUSED(widget)
-}
-
-QLineF WireGraphicsItem::getLineWithWireDirection(QPoint start_point, WireDirection wire_direction)
-{
-    QPoint end_point;
-
-    switch (wire_direction.getType()) {
-        case WireDirectionType::TOP:
-            end_point = QPoint(start_point.x(), start_point.y() - wire_direction.getLength());
-            break;
-
-        case WireDirectionType::BOTTOM:
-            end_point = QPoint(start_point.x(), start_point.y() + wire_direction.getLength());
-            break;
-
-        case WireDirectionType::LEFT:
-            end_point = QPoint(start_point.x() - wire_direction.getLength(), start_point.y());
-            break;
-
-        case WireDirectionType::RIGHT:
-            end_point = QPoint(start_point.x() + wire_direction.getLength(), start_point.y());
-            break;
-    }
-
-    QPointF start_point_f = QPointF(start_point.x());
-
-    return QLineF(start_point, end_point);
 }
 
 void WireGraphicsItem::setCellSize(const QSizeF &cell_size) {
@@ -104,14 +78,16 @@ void WireGraphicsItem::setCenter(const QPoint &center) {
     this->setPos(this->updatedPos());
 }
 
-void WireGraphicsItem::setColor(const QColor &color)
+void WireGraphicsItem::setLineColor(const QColor &line_color)
 {
-    this->color = color;
+    this->line_color = line_color;
+    this->paramsUpdated();
 }
 
 void WireGraphicsItem::setLineWidth(qreal line_width)
 {
     this->line_width = line_width;
+    this->paramsUpdated();
 }
 
 void WireGraphicsItem::setVisibility(bool visible) {
@@ -122,6 +98,12 @@ void WireGraphicsItem::setVisibility(bool visible) {
         this->hide();
     }
 }
+
+void WireGraphicsItem::paramsUpdated()
+{
+    this->update();
+}
+
 
 
 WireModel::WireModel(QObject *parent) : QObject(parent)
@@ -138,8 +120,7 @@ WireModel::WireModel(const WireModel &obj)
     this->id = object_count++;
 
     this->cells_rect = obj.cells_rect;
-    this->first_direction = obj.first_direction;
-    this->second_direction = obj.second_direction;
+    this->points = obj.points;
     this->center = obj.center;
     this->graphics_item = obj.graphics_item->clone(this);
 }
@@ -150,4 +131,9 @@ WireModel::~WireModel()
 }
 
 int WireModel::object_count = 0;
+
+void WireModel::updateCellsRect()
+{
+    this->cells_rect = this->points.boundingRect();
+}
 
