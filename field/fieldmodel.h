@@ -53,6 +53,9 @@ signals:
     void onGridLeave();
     void onCellPressed(QPoint);
 
+    void onGraphicsItemEntered(FieldGraphicsItem*);
+    void onGraphicsItemLeaved(FieldGraphicsItem*);
+
 public slots:
     void setCellSize(const QSizeF &cell_size) {
         this->cell_size = cell_size;

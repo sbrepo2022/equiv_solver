@@ -14,9 +14,14 @@ public:
     void detachFieldModel();
     void attachFieldModel(FieldModel *field_model);
 
+private:
+    FieldGraphicsItem *current_graphics_item;
+
 signals:
 
 public slots:
+    void onGraphicsItemEntered(FieldGraphicsItem *graphics_item);
+    void onGraphicsItemLeaved(FieldGraphicsItem *graphics_item);
 };
 
 #endif // FIELDSELECTMODECONTROLLER_H

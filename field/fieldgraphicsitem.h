@@ -16,17 +16,7 @@ private:
 protected:
     QSizeF cell_size;
 
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-        emit hoverEntered(this);
-
-        Q_UNUSED(event);
-    }
-
-    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-        emit hoverLeaved(this);
-
-        Q_UNUSED(event);
-    }
+    bool mark_hovered;
 
 signals:
     void hoverEntered(FieldGraphicsItem*);
@@ -34,6 +24,8 @@ signals:
 
 public slots:
     virtual void setCellSize(const QSizeF &cell_size);
+    void setMarkHovered(bool mark_hovered) {this->mark_hovered = mark_hovered; this->paramsUpdated();}
+    void paramsUpdated() {this->update();}
 
 
 // -- DEBUG --

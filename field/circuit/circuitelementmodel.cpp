@@ -5,6 +5,8 @@ CircuitElementGraphicsItem::CircuitElementGraphicsItem(CircuitElementModel *mode
     this->color = QColor(0, 0, 0);
     connect(model, &CircuitElementModel::centerChanged, this, &CircuitElementGraphicsItem::setCenter);
     this->setCenter(model->getCenter());
+
+    this->setAcceptHoverEvents(true);
 }
 
 CircuitElementGraphicsItem::~CircuitElementGraphicsItem()
@@ -39,6 +41,22 @@ QRectF CircuitElementGraphicsItem::boundingRect() const
             (cells_rect.top() + cells_rect.height()) * cell_height
         )
     );
+}
+
+void CircuitElementGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+    emit hoverEntered(this);
+
+    Q_UNUSED(event);
+}
+
+void CircuitElementGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
+    Q_UNUSED(event);
+}
+
+void CircuitElementGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+    emit hoverLeaved(this);
+
+    Q_UNUSED(event);
 }
 
 QPointF CircuitElementGraphicsItem::updatedPos() {

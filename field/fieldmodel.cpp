@@ -109,6 +109,8 @@ WireModel* FieldModel::removeWireElement(int id)
 void FieldModel::connectWithGraphicsItem(FieldGraphicsItem *field_graphics_item)
 {
     connect(this, &FieldModel::cellSizeChanged, field_graphics_item, &FieldGraphicsItem::setCellSize);
+    connect(field_graphics_item, &FieldGraphicsItem::hoverEntered, this, &FieldModel::onGraphicsItemEntered);
+    connect(field_graphics_item, &FieldGraphicsItem::hoverLeaved, this, &FieldModel::onGraphicsItemLeaved);
 
     // debug
     connect(this, &FieldModel::graphicsItemDebugChanged, field_graphics_item, &FieldGraphicsItem::setDebug);
@@ -117,6 +119,8 @@ void FieldModel::connectWithGraphicsItem(FieldGraphicsItem *field_graphics_item)
 void FieldModel::disconnectFromGraphicsItem(FieldGraphicsItem *field_graphics_item)
 {
     disconnect(this, &FieldModel::cellSizeChanged, field_graphics_item, &FieldGraphicsItem::setCellSize);
+    disconnect(field_graphics_item, &FieldGraphicsItem::hoverEntered, this, &FieldModel::onGraphicsItemEntered);
+    disconnect(field_graphics_item, &FieldGraphicsItem::hoverLeaved, this, &FieldModel::onGraphicsItemLeaved);
 
     // debug
     disconnect(this, &FieldModel::graphicsItemDebugChanged, field_graphics_item, &FieldGraphicsItem::setDebug);

@@ -5,6 +5,8 @@ FieldGraphicsItem::FieldGraphicsItem(QObject *parent) :
     QGraphicsItem()
 {
     this->cell_size = QSizeF(32, 32);
+    this->mark_hovered = false;
+
     this->debug = false;
 }
 

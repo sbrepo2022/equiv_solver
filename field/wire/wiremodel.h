@@ -4,35 +4,10 @@
 #include <QObject>
 #include <QRect>
 #include <QPainter>
+#include <QGraphicsSceneHoverEvent>
 #include <QDebug>
 
 #include "../fieldgraphicsitem.h"
-
-enum WireDirectionType {
-    TOP,
-    BOTTOM,
-    LEFT,
-    RIGHT
-};
-
-
-class WireDirection
-{
-public:
-    WireDirection() : type(WireDirectionType::TOP), length(0) {}
-    WireDirection(WireDirectionType type, int length) : type(type), length(length) {}
-
-    WireDirectionType getType() {return this->type;}
-    int getLength() {return this->length;}
-
-    void setType(WireDirectionType type) {this->type = type;}
-    void setLength(int length) {this->length = length;}
-
-private:
-    WireDirectionType type;
-    int length;
-};
-
 
 class WireModel;
 
@@ -49,11 +24,20 @@ public:
 
     QRectF boundingRect() const;
 
+protected:
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
+    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
 private:
     WireModel *model;
     QColor line_color;
+    QColor line_hover_color;
     qreal line_width;
     QPoint center;
+
+    qreal line_hover_distance;
+    bool hovered;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
@@ -63,10 +47,11 @@ private:
 public slots:
     void setCellSize(const QSizeF &cell_size);
     void setCenter(const QPoint &center);
+    void setLineHoverColor(const QColor &line_hover_color);
     void setLineColor(const QColor &line_color);
     void setLineWidth(qreal width);
+    void setLineHoverDistance(qreal line_hover_distance);
     void setVisibility(bool visible);
-    void paramsUpdated();
 };
 
 

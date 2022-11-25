@@ -26,6 +26,11 @@ public:
 
     QRectF boundingRect() const;
 
+protected:
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
+    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
 private:
     CircuitElementModel *model;
     QImage image;
