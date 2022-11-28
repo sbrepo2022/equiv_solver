@@ -3,6 +3,7 @@
 CircuitElementGraphicsItem::CircuitElementGraphicsItem(CircuitElementModel *model, QObject *parent) : FieldGraphicsItem (parent), model(model)
 {
     this->color = QColor(0, 0, 0);
+    this->hover_color = QColor(220, 20, 0);
     connect(model, &CircuitElementModel::centerChanged, this, &CircuitElementGraphicsItem::setCenter);
     this->setCenter(model->getCenter());
 
@@ -46,17 +47,17 @@ QRectF CircuitElementGraphicsItem::boundingRect() const
 void CircuitElementGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
     emit hoverEntered(this);
 
-    Q_UNUSED(event);
+    QGraphicsItem::hoverEnterEvent(event);
 }
 
 void CircuitElementGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
-    Q_UNUSED(event);
+    QGraphicsItem::hoverMoveEvent(event);
 }
 
 void CircuitElementGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
     emit hoverLeaved(this);
 
-    Q_UNUSED(event);
+    QGraphicsItem::hoverLeaveEvent(event);
 }
 
 QPointF CircuitElementGraphicsItem::updatedPos() {
@@ -79,12 +80,13 @@ void CircuitElementGraphicsItem::paint(QPainter *painter, const QStyleOptionGrap
 }
 
 void CircuitElementGraphicsItem::updateDrawImage() {
+    QColor color = this->mark_hovered ? this->hover_color : this->color;
     for (int y = 0; y < this->draw_px.size().height(); y++) {
         for (int x = 0; x < this->draw_px.size().width(); x++) {
             this->draw_px.setPixelColor(x, y, QColor(
-                this->color.red(),
-                this->color.green(),
-                this->color.blue(),
+                color.red(),
+                color.green(),
+                color.blue(),
                 this->draw_px.pixelColor(x, y).alpha()
             ));
         }
@@ -96,6 +98,12 @@ void CircuitElementGraphicsItem::setCellSize(const QSizeF &cell_size) {
     this->setPos(this->updatedPos());
 }
 
+void CircuitElementGraphicsItem::paramsUpdated()
+{
+    this->updateDrawImage();
+    this->FieldGraphicsItem::paramsUpdated();
+}
+
 void CircuitElementGraphicsItem::setCenter(const QPoint &center) {
     this->center = center;
     this->setPos(this->updatedPos());
@@ -105,13 +113,19 @@ void CircuitElementGraphicsItem::setImage(const QImage &image)
 {
     this->image = image;
     this->draw_px = image.convertToFormat(QImage::Format_ARGB32, Qt::AutoColor);
-    updateDrawImage();
+    this->paramsUpdated();
 }
 
 void CircuitElementGraphicsItem::setColor(const QColor &color)
 {
     this->color = color;
-    updateDrawImage();
+    this->paramsUpdated();
+}
+
+void CircuitElementGraphicsItem::setHoverColor(const QColor &hover_color)
+{
+    this->hover_color = hover_color;
+    this->paramsUpdated();
 }
 
 void CircuitElementGraphicsItem::setVisibility(bool visible) {

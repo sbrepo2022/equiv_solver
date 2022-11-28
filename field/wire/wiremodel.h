@@ -36,7 +36,7 @@ private:
     qreal line_width;
     QPoint center;
 
-    qreal line_hover_distance;
+    qreal line_hover_distance_factor;
     bool hovered;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -50,7 +50,7 @@ public slots:
     void setLineHoverColor(const QColor &line_hover_color);
     void setLineColor(const QColor &line_color);
     void setLineWidth(qreal width);
-    void setLineHoverDistance(qreal line_hover_distance);
+    void setLineHoverDistanceFactor(qreal line_hover_distance_factor);
     void setVisibility(bool visible);
 };
 

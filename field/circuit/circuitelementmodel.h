@@ -8,6 +8,7 @@
 #include <QBitmap>
 #include <QRgb>
 #include <QPainter>
+#include <QGraphicsSceneHoverEvent>
 #include <QDebug>
 
 #include "../fieldgraphicsitem.h"
@@ -36,6 +37,7 @@ private:
     QImage image;
     QImage draw_px;
     QColor color;
+    QColor hover_color;
     QPoint center;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -45,9 +47,11 @@ private:
 
 public slots:
     void setCellSize(const QSizeF &cell_size);
+    void paramsUpdated();
     void setCenter(const QPoint &center);
     void setImage(const QImage &image);
     void setColor(const QColor &color);
+    void setHoverColor(const QColor &hovered_color);
     void setVisibility(bool visible);
 };
 

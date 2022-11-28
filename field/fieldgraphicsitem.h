@@ -24,8 +24,8 @@ signals:
 
 public slots:
     virtual void setCellSize(const QSizeF &cell_size);
+    virtual void paramsUpdated() {this->update();}
     void setMarkHovered(bool mark_hovered) {this->mark_hovered = mark_hovered; this->paramsUpdated();}
-    void paramsUpdated() {this->update();}
 
 
 // -- DEBUG --

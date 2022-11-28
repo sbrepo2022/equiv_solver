@@ -6,7 +6,7 @@ WireGraphicsItem::WireGraphicsItem(WireModel *model, QObject *parent) : FieldGra
     this->line_hover_color = QColor(220, 20, 0);
     this->line_width = 4;
     this->hovered = false;
-    this->line_hover_distance = 5.0;
+    this->line_hover_distance_factor = 1.0;
     connect(model, &WireModel::centerChanged, this, &WireGraphicsItem::setCenter);
     connect(model, &WireModel::pointsChanged, this, &WireGraphicsItem::paramsUpdated);
     this->setCenter(model->getCenter());
@@ -49,7 +49,8 @@ QRectF WireGraphicsItem::boundingRect() const  // ????
 }
 
 void WireGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-    Q_UNUSED(event);
+
+    QGraphicsItem::hoverEnterEvent(event);
 }
 
 void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
@@ -61,13 +62,16 @@ void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
     QTransform transform;
     transform = transform.scale(this->cell_size.width(),this->cell_size.height());
     QPolygonF points = transform.map(polyline_f);
+
+    qreal dist = (this->cell_size.width() + this->cell_size.height()) / 2 * this->line_hover_distance_factor;
+
     for (int i = 0; i < points.count() - 1; i++) {
         QPointF a = points[i + 1] - points[i];
-        QPointF b = pos - points[0];
-        qreal h_len_sq = QPointF::dotProduct(b, b) - QPointF::dotProduct(a, b) / QPointF::dotProduct(a, a);
+        QPointF b = pos - points[i];
+        qreal h_len_sq = QPointF::dotProduct(b, b) - pow(QPointF::dotProduct(a, b), 2) / QPointF::dotProduct(a, a);
         QPointF n = QPointF(-a.y(), a.x());
         qreal v_len = n.x() * b.y() - n.y() * b.x();
-        if (h_len_sq <= this->line_hover_distance * this->line_hover_distance && v_len >= 0) {
+        if (h_len_sq <= dist * dist && v_len <= 0) {
             result = true;
         }
     }
@@ -82,14 +86,14 @@ void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
         emit this->hoverEntered(this);
     }
 
-    Q_UNUSED(event);
+    QGraphicsItem::hoverMoveEvent(event);
 }
 
 void WireGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
     this->hovered = false;
     emit hoverLeaved(this);
 
-    Q_UNUSED(event);
+    QGraphicsItem::hoverLeaveEvent(event);
 }
 
 QPointF WireGraphicsItem::updatedPos() {
@@ -145,9 +149,9 @@ void WireGraphicsItem::setLineWidth(qreal line_width)
     this->paramsUpdated();
 }
 
-void WireGraphicsItem::setLineHoverDistance(qreal line_hover_distance)
+void WireGraphicsItem::setLineHoverDistanceFactor(qreal line_hover_distance_factor)
 {
-    this->line_hover_distance = line_hover_distance;
+    this->line_hover_distance_factor = line_hover_distance_factor;
 }
 
 void WireGraphicsItem::setVisibility(bool visible) {
