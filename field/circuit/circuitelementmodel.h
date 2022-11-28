@@ -22,6 +22,8 @@ class CircuitElementGraphicsItem : public FieldGraphicsItem
 public:
     explicit CircuitElementGraphicsItem(CircuitElementModel *model, QObject *parent = nullptr);
     ~CircuitElementGraphicsItem();
+    CircuitElementModel* getModel() {return this->model;}
+    FieldGraphicsItemType getType() {return FieldGraphicsItemType::CIRCUIT_ELEMENT;}
 
     CircuitElementGraphicsItem* clone(CircuitElementModel *model);
 
@@ -31,6 +33,7 @@ protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     CircuitElementModel *model;

@@ -3,6 +3,14 @@
 
 #include <QObject>
 #include <QGraphicsItem>
+#include <QMouseEvent>
+
+enum class FieldGraphicsItemType
+{
+    GRID,
+    CIRCUIT_ELEMENT,
+    WIRE
+};
 
 class FieldGraphicsItem : public QObject, public QGraphicsItem
 {
@@ -10,6 +18,7 @@ class FieldGraphicsItem : public QObject, public QGraphicsItem
 
 public:
     explicit FieldGraphicsItem(QObject *parent = nullptr);
+    virtual FieldGraphicsItemType getType() = 0;
 
 private:
 
@@ -21,6 +30,7 @@ protected:
 signals:
     void hoverEntered(FieldGraphicsItem*);
     void hoverLeaved(FieldGraphicsItem*);
+    void mousePressed(FieldGraphicsItem*, QGraphicsSceneMouseEvent*);
 
 public slots:
     virtual void setCellSize(const QSizeF &cell_size);

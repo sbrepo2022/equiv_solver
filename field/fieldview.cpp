@@ -10,17 +10,4 @@ FieldView::~FieldView()
 {
 
 }
-/*
-void FieldView::addFieldGraphicsItem(FieldGraphicsItem *field_graphics_item) {
-    if (this->scene() != nullptr) {
-        field_graphics_item->setZValue(100);
-        this->scene()->addItem(field_graphics_item);
-    }
-}
 
-void FieldView::removeFieldGraphicsItem(FieldGraphicsItem *field_graphics_item) {
-    if (this->scene() != nullptr) {
-        this->scene()->removeItem(field_graphics_item);
-    }
-}
-*/

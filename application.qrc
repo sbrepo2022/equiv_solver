@@ -17,4 +17,15 @@
         <file>resources/tools/pencil.png</file>
         <file>resources/tools/select.png</file>
     </qresource>
+    <qresource prefix="/logo">
+        <file>resources/logo/logo.svg</file>
+        <file>resources/logo/icon.ico</file>
+        <file>resources/logo/logo_16.png</file>
+        <file>resources/logo/logo_32.png</file>
+        <file>resources/logo/logo_48.png</file>
+        <file>resources/logo/logo_64.png</file>
+        <file>resources/logo/logo_128.png</file>
+        <file>resources/logo/logo_256.png</file>
+        <file>resources/logo/logo_512.png</file>
+    </qresource>
 </RCC>

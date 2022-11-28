@@ -6,8 +6,6 @@ CircuitElementGraphicsItem::CircuitElementGraphicsItem(CircuitElementModel *mode
     this->hover_color = QColor(220, 20, 0);
     connect(model, &CircuitElementModel::centerChanged, this, &CircuitElementGraphicsItem::setCenter);
     this->setCenter(model->getCenter());
-
-    this->setAcceptHoverEvents(true);
 }
 
 CircuitElementGraphicsItem::~CircuitElementGraphicsItem()
@@ -58,6 +56,12 @@ void CircuitElementGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event
     emit hoverLeaved(this);
 
     QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void CircuitElementGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    //emit mousePressed(this, event);
+    QGraphicsItem::mousePressEvent(event);
 }
 
 QPointF CircuitElementGraphicsItem::updatedPos() {

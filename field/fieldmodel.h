@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QGraphicsScene>
 
+#include "fieldscene.h"
 #include "grid/gridmodel.h"
 #include "circuit/circuitelementmodel.h"
 #include "wire/wiremodel.h"
@@ -55,6 +56,7 @@ signals:
 
     void onGraphicsItemEntered(FieldGraphicsItem*);
     void onGraphicsItemLeaved(FieldGraphicsItem*);
+    void onGraphicsItemMousePressed(FieldGraphicsItem*, QGraphicsSceneMouseEvent*);
 
 public slots:
     void setCellSize(const QSizeF &cell_size) {
@@ -62,6 +64,9 @@ public slots:
         emit cellSizeChanged(cell_size);
     }
     void setGridSize(const QSize &grid_size) {this->grid_model->setGridSize(grid_size);}
+    void setAcceptHoverEventsFromFieldElements(bool accept);
+    void setAcceptHoverEventsFromCircuitElements(bool accept);
+    void setAcceptHoverEventsFromWires(bool accept);
     void updateScene();
 
 // -- DEBUG --

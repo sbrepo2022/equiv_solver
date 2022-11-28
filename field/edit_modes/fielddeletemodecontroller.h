@@ -2,10 +2,11 @@
 #define FIELDDELETEMODECONTROLLER_H
 
 #include <QObject>
+#include <QGraphicsSceneMouseEvent>
 
-#include "fieldeditmodecontroller.h"
+#include "fieldselectmodecontroller.h"
 
-class FieldDeleteModeController : public FieldEditModeController
+class FieldDeleteModeController : public FieldSelectModeController
 {
     Q_OBJECT
 public:
@@ -17,6 +18,7 @@ public:
 signals:
 
 public slots:
+    void onGraphicsItemMousePressed(FieldGraphicsItem *graphics_item, QGraphicsSceneMouseEvent *event);
 };
 
 #endif // FIELDDELETEMODECONTROLLER_H

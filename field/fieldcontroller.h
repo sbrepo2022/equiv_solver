@@ -17,7 +17,7 @@
 #include "edit_modes/fielddeletemodecontroller.h"
 #include "edit_modes/fielddrawelementmodecontroller.h"
 
-enum FieldEditMode {
+enum class FieldEditMode {
     SELECT,
     WIRE,
     DELETE,

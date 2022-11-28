@@ -2,6 +2,7 @@
 #define WIREMODEL_H
 
 #include <QObject>
+#include <QPainterPath>
 #include <QRect>
 #include <QPainter>
 #include <QGraphicsSceneHoverEvent>
@@ -19,15 +20,19 @@ class WireGraphicsItem : public FieldGraphicsItem
 public:
     explicit WireGraphicsItem(WireModel *model, QObject *parent = nullptr);
     ~WireGraphicsItem();
+    WireModel* getModel() {return this->model;}
+    FieldGraphicsItemType getType() {return FieldGraphicsItemType::WIRE;}
 
     WireGraphicsItem* clone(WireModel *model);
 
     QRectF boundingRect() const;
+    QPainterPath shape() const;
 
 protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     WireModel *model;
@@ -37,7 +42,6 @@ private:
     QPoint center;
 
     qreal line_hover_distance_factor;
-    bool hovered;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 

@@ -43,7 +43,8 @@ SOURCES += \
     field/edit_modes/fieldselectmodecontroller.cpp \
     field/edit_modes/fieldwiremodecontroller.cpp \
     field/edit_modes/fielddeletemodecontroller.cpp \
-    field/edit_modes/fielddrawelementmodecontroller.cpp
+    field/edit_modes/fielddrawelementmodecontroller.cpp \
+    field/fieldscene.cpp
 
 HEADERS += \
     circuitsettingsdialog.h \
@@ -63,7 +64,8 @@ HEADERS += \
     field/edit_modes/fieldselectmodecontroller.h \
     field/edit_modes/fieldwiremodecontroller.h \
     field/edit_modes/fielddeletemodecontroller.h \
-    field/edit_modes/fielddrawelementmodecontroller.h
+    field/edit_modes/fielddrawelementmodecontroller.h \
+    field/fieldscene.h
 
 FORMS += \
         circuitsettingsdialog.ui \
@@ -78,3 +80,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     application.qrc
+
+RC_ICONS = resources/logo/icon.ico

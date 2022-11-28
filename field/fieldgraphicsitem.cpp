@@ -8,6 +8,9 @@ FieldGraphicsItem::FieldGraphicsItem(QObject *parent) :
     this->mark_hovered = false;
 
     this->debug = false;
+
+    this->setAcceptHoverEvents(false);
+    //this->setAcceptedMouseButtons(Qt::LeftButton);
 }
 
 void FieldGraphicsItem::setCellSize(const QSizeF &cell_size) {

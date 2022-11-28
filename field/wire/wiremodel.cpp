@@ -1,17 +1,15 @@
 #include "wiremodel.h"
+#include <cmath>
 
 WireGraphicsItem::WireGraphicsItem(WireModel *model, QObject *parent) : FieldGraphicsItem (parent), model(model)
 {
     this->line_color = QColor(0, 0, 0);
     this->line_hover_color = QColor(220, 20, 0);
     this->line_width = 4;
-    this->hovered = false;
     this->line_hover_distance_factor = 1.0;
     connect(model, &WireModel::centerChanged, this, &WireGraphicsItem::setCenter);
     connect(model, &WireModel::pointsChanged, this, &WireGraphicsItem::paramsUpdated);
     this->setCenter(model->getCenter());
-
-    this->setAcceptHoverEvents(true);
 }
 
 WireGraphicsItem::~WireGraphicsItem()
@@ -48,16 +46,12 @@ QRectF WireGraphicsItem::boundingRect() const  // ????
     );
 }
 
-void WireGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+QPainterPath WireGraphicsItem::shape() const
+{
+    QPainterPath path;
+    path.setFillRule(Qt::WindingFill);
 
-    QGraphicsItem::hoverEnterEvent(event);
-}
-
-void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
-    bool result = false;
-    QPointF pos = event->pos();
-
-    if (this->model == nullptr) return;
+    if (this->model == nullptr) return path;
     QPolygonF polyline_f = this->model->getPoints();
     QTransform transform;
     transform = transform.scale(this->cell_size.width(),this->cell_size.height());
@@ -67,33 +61,46 @@ void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 
     for (int i = 0; i < points.count() - 1; i++) {
         QPointF a = points[i + 1] - points[i];
-        QPointF b = pos - points[i];
-        qreal h_len_sq = QPointF::dotProduct(b, b) - pow(QPointF::dotProduct(a, b), 2) / QPointF::dotProduct(a, a);
         QPointF n = QPointF(-a.y(), a.x());
-        qreal v_len = n.x() * b.y() - n.y() * b.x();
-        if (h_len_sq <= dist * dist && v_len <= 0) {
-            result = true;
-        }
+        if (n.manhattanLength() != 0.0) n = n / n.manhattanLength();
+
+        QVector<QPointF> bounding_points = {
+            points[i + 1] + n * dist,
+            points[i] + n * dist,
+            points[i] - n * dist,
+            points[i + 1] - n * dist,
+        };
+        QPolygonF bounding_polygon(bounding_points);
+        path.addPolygon(bounding_polygon);
     }
 
-    if (this->hovered && !result) {
-        this->hovered = false;
-        emit this->hoverLeaved(this);
-    }
+    return path;
+}
 
-    if (!this->hovered && result) {
-        this->hovered = true;
-        emit this->hoverEntered(this);
-    }
+void WireGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    emit hoverEntered(this);
 
+    QGraphicsItem::hoverEnterEvent(event);
+}
+
+void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
     QGraphicsItem::hoverMoveEvent(event);
 }
 
-void WireGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-    this->hovered = false;
+void WireGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
     emit hoverLeaved(this);
 
     QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void WireGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    //emit mousePressed(this, event);
+
+    QGraphicsItem::mousePressEvent(event);
 }
 
 QPointF WireGraphicsItem::updatedPos() {

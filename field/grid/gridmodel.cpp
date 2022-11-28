@@ -49,6 +49,8 @@ void GridGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QPointF pos = event->pos();
     QPoint cur_pressed_cell = getCellByMousePos(pos);
     emit onCellPressed(cur_pressed_cell);
+
+    QGraphicsItem::mousePressEvent(event);
 }
 
 void GridGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

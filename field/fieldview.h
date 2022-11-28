@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
+#include <QHash>
 
 #include "grid/gridmodel.h"
 #include "fieldgraphicsitem.h"

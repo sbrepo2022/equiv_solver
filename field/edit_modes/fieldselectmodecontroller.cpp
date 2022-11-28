@@ -13,6 +13,8 @@ void FieldSelectModeController::detachFieldModel()
     if (field_model != nullptr) {
         disconnect(field_model, &FieldModel::onGraphicsItemEntered, this, &FieldSelectModeController::onGraphicsItemEntered);
         disconnect(field_model, &FieldModel::onGraphicsItemLeaved, this, &FieldSelectModeController::onGraphicsItemLeaved);
+
+        field_model->setAcceptHoverEventsFromFieldElements(false);
     }
 
     if (this->current_graphics_item != nullptr) {
@@ -27,6 +29,8 @@ void FieldSelectModeController::attachFieldModel(FieldModel *field_model)
     if (field_model != nullptr) {
         connect(field_model, &FieldModel::onGraphicsItemEntered, this, &FieldSelectModeController::onGraphicsItemEntered);
         connect(field_model, &FieldModel::onGraphicsItemLeaved, this, &FieldSelectModeController::onGraphicsItemLeaved);
+
+        field_model->setAcceptHoverEventsFromFieldElements(true);
     }
 
     this->FieldEditModeController::attachFieldModel(field_model);

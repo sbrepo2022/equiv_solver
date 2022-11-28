@@ -111,6 +111,7 @@ void FieldModel::connectWithGraphicsItem(FieldGraphicsItem *field_graphics_item)
     connect(this, &FieldModel::cellSizeChanged, field_graphics_item, &FieldGraphicsItem::setCellSize);
     connect(field_graphics_item, &FieldGraphicsItem::hoverEntered, this, &FieldModel::onGraphicsItemEntered);
     connect(field_graphics_item, &FieldGraphicsItem::hoverLeaved, this, &FieldModel::onGraphicsItemLeaved);
+    connect(field_graphics_item, &FieldGraphicsItem::mousePressed, this, &FieldModel::onGraphicsItemMousePressed);
 
     // debug
     connect(this, &FieldModel::graphicsItemDebugChanged, field_graphics_item, &FieldGraphicsItem::setDebug);
@@ -121,7 +122,28 @@ void FieldModel::disconnectFromGraphicsItem(FieldGraphicsItem *field_graphics_it
     disconnect(this, &FieldModel::cellSizeChanged, field_graphics_item, &FieldGraphicsItem::setCellSize);
     disconnect(field_graphics_item, &FieldGraphicsItem::hoverEntered, this, &FieldModel::onGraphicsItemEntered);
     disconnect(field_graphics_item, &FieldGraphicsItem::hoverLeaved, this, &FieldModel::onGraphicsItemLeaved);
+    disconnect(field_graphics_item, &FieldGraphicsItem::mousePressed, this, &FieldModel::onGraphicsItemMousePressed);
 
     // debug
     disconnect(this, &FieldModel::graphicsItemDebugChanged, field_graphics_item, &FieldGraphicsItem::setDebug);
+}
+
+void FieldModel::setAcceptHoverEventsFromFieldElements(bool accept)
+{
+    this->setAcceptHoverEventsFromCircuitElements(accept);
+    this->setAcceptHoverEventsFromWires(accept);
+}
+
+void FieldModel::setAcceptHoverEventsFromCircuitElements(bool accept)
+{
+    for (auto item : this->circuit_elements) {
+        item->getGraphicsItem()->setAcceptHoverEvents(accept);
+    }
+}
+
+void FieldModel::setAcceptHoverEventsFromWires(bool accept)
+{
+    for (auto item : this->wires) {
+        item->getGraphicsItem()->setAcceptHoverEvents(accept);
+    }
 }

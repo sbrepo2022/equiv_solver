@@ -19,6 +19,7 @@ class GridGraphicsItem : public FieldGraphicsItem
 public:
     explicit GridGraphicsItem(GridModel *model, QObject *parent = nullptr);
     ~GridGraphicsItem();
+    FieldGraphicsItemType getType() {return FieldGraphicsItemType::GRID;}
 
     QRectF boundingRect() const;
 
