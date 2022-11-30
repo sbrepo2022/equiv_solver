@@ -28,4 +28,7 @@
         <file>resources/logo/logo_256.png</file>
         <file>resources/logo/logo_512.png</file>
     </qresource>
+    <qresource prefix="/theme">
+        <file>resources/theme/theme.qss</file>
+    </qresource>
 </RCC>

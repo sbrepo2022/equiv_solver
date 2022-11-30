@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
 #include <QActionGroup>
 #include <QTabBar>
 #include <QBoxLayout>

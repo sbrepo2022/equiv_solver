@@ -81,6 +81,7 @@ void MainWindow::setupAdditionalUi()
     this->field_cursor_group->addAction(ui->actionL);
     this->field_cursor_group->addAction(ui->actionGnd);
 
+
     this->field_models_tabs = new QTabBar();
     this->field_models_tabs->setTabsClosable(true);
     this->field_models_tabs->setShape(QTabBar::RoundedSouth);
@@ -89,6 +90,12 @@ void MainWindow::setupAdditionalUi()
     qobject_cast<QBoxLayout*>(this->ui->centralWidget->layout())->addWidget(this->field_models_tabs);
     connect(this->field_models_tabs, &QTabBar::currentChanged, this, &MainWindow::onModelsTabIndexChanged);
     connect(this->field_models_tabs, &QTabBar::tabCloseRequested, this, &MainWindow::onModelsTabRemove);
+
+
+    QLabel *logo_widget = new QLabel(this);;
+    logo_widget->setPixmap(QPixmap(":/logo/resources/logo/logo_32.png"));
+    logo_widget->setScaledContents(true);
+    this->ui->menuBar->setCornerWidget(logo_widget, Qt::TopLeftCorner);
 }
 
 void MainWindow::onModelsTabIndexChanged(int tab_index)
