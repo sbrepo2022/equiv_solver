@@ -10,8 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setupAdditionalUi();
 
-    this->showMaximized();
-
     this->field_controller = new FieldController(ui->circuitGraphicsView, this);
     connect(ui->actionNew, &QAction::triggered, this, [=]() {
         int model_index = field_controller->addFieldModel(FieldFactory::createNew());
@@ -92,7 +90,7 @@ void MainWindow::setupAdditionalUi()
     connect(this->field_models_tabs, &QTabBar::tabCloseRequested, this, &MainWindow::onModelsTabRemove);
 
 
-    QLabel *logo_widget = new QLabel(this);;
+    QLabel *logo_widget = new QLabel(this);
     logo_widget->setPixmap(QPixmap(":/logo/resources/logo/logo_32.png"));
     logo_widget->setScaledContents(true);
     this->ui->menuBar->setCornerWidget(logo_widget, Qt::TopLeftCorner);

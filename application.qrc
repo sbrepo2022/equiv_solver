@@ -31,4 +31,10 @@
     <qresource prefix="/theme">
         <file>resources/theme/theme.qss</file>
     </qresource>
+    <qresource prefix="/ui_icons">
+        <file>resources/ui_icons/close.svg</file>
+        <file>resources/ui_icons/minimize.svg</file>
+        <file>resources/ui_icons/zoom.svg</file>
+        <file>resources/ui_icons/zoom_minimize.svg</file>
+    </qresource>
 </RCC>

@@ -4,15 +4,15 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
     QFile style(":/theme/resources/theme/theme.qss");
     style.open(QFile::ReadOnly);
-    a.setStyleSheet(style.readAll());
+    app.setStyleSheet(style.readAll());
     style.close();
 
-    MainWindow w;
-    w.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    w.show();
+    MainWindow window;
+    window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    window.showMaximized();
 
-    return a.exec();
+    return app.exec();
 }

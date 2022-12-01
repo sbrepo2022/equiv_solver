@@ -6,6 +6,7 @@
 #include <QActionGroup>
 #include <QTabBar>
 #include <QBoxLayout>
+#include <QPushButton>
 
 #include "field/fieldcontroller.h"
 #include "field/fieldfactory.h"

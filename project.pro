@@ -26,6 +26,7 @@ CONFIG += c++14
 
 SOURCES += \
     circuitsettingsdialog.cpp \
+    components/windowmanagebuttons.cpp \
     field/fieldfactory.cpp \
     field/fieldmodel.cpp \
     field/wire/wiremodel.cpp \
@@ -48,6 +49,7 @@ SOURCES += \
 
 HEADERS += \
     circuitsettingsdialog.h \
+    components/windowmanagebuttons.h \
     field/fieldfactory.h \
     field/fieldmodel.h \
     field/wire/wiremodel.h \
@@ -69,6 +71,7 @@ HEADERS += \
 
 FORMS += \
         circuitsettingsdialog.ui \
+    components/windowmanagebuttons.ui \
         fieldstyledialog.ui \
         mainwindow.ui \
     startdialog.ui
