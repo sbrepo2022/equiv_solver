@@ -45,7 +45,8 @@ SOURCES += \
     field/edit_modes/fieldwiremodecontroller.cpp \
     field/edit_modes/fielddeletemodecontroller.cpp \
     field/edit_modes/fielddrawelementmodecontroller.cpp \
-    field/fieldscene.cpp
+    field/fieldscene.cpp \
+    components/windowframemenubar.cpp
 
 HEADERS += \
     circuitsettingsdialog.h \
@@ -67,7 +68,8 @@ HEADERS += \
     field/edit_modes/fieldwiremodecontroller.h \
     field/edit_modes/fielddeletemodecontroller.h \
     field/edit_modes/fielddrawelementmodecontroller.h \
-    field/fieldscene.h
+    field/fieldscene.h \
+    components/windowframemenubar.h
 
 FORMS += \
         circuitsettingsdialog.ui \
@@ -85,3 +87,6 @@ RESOURCES += \
     application.qrc
 
 RC_ICONS = resources/logo/icon.ico
+
+DISTFILES += \
+    components/windowmanagebuttons.css

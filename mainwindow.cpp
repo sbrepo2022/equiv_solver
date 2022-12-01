@@ -90,6 +90,25 @@ void MainWindow::setupAdditionalUi()
     connect(this->field_models_tabs, &QTabBar::tabCloseRequested, this, &MainWindow::onModelsTabRemove);
 
 
+    this->window_manage_buttons = new WindowManageButtons(this);
+    this->ui->menuBar->setCornerWidget(window_manage_buttons, Qt::TopRightCorner);
+    connect(this->window_manage_buttons, &WindowManageButtons::minimized, this, [=]() {
+        this->showMinimized();
+    });
+    connect(this->window_manage_buttons, &WindowManageButtons::maximized, this, [=]() {
+        this->showMaximized();
+    });
+    connect(this->window_manage_buttons, &WindowManageButtons::normalized, this, [=]() {
+        this->showNormal();
+    });
+    connect(this->ui->menuBar, &WindowFrameMenuBar::normalized, this, [=]() {
+        this->showNormal();
+        this->window_manage_buttons->setZoom(false);
+    });
+    connect(this->ui->menuBar, &WindowFrameMenuBar::moved, this, [=](QPoint delta) {
+        this->move(this->pos() + delta);
+    });
+
     QLabel *logo_widget = new QLabel(this);
     logo_widget->setPixmap(QPixmap(":/logo/resources/logo/logo_32.png"));
     logo_widget->setScaledContents(true);

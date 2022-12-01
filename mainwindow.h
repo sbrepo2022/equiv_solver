@@ -10,6 +10,8 @@
 
 #include "field/fieldcontroller.h"
 #include "field/fieldfactory.h"
+#include "components/windowmanagebuttons.h"
+#include "components/windowframemenubar.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +27,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    WindowManageButtons *window_manage_buttons;
     QActionGroup *field_cursor_group;
     QTabBar *field_models_tabs;
 

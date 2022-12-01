@@ -29,7 +29,8 @@
         <file>resources/logo/logo_512.png</file>
     </qresource>
     <qresource prefix="/theme">
-        <file>resources/theme/theme.qss</file>
+        <file>resources/theme/theme.css</file>
+        <file>components/windowmanagebuttons.css</file>
     </qresource>
     <qresource prefix="/ui_icons">
         <file>resources/ui_icons/close.svg</file>

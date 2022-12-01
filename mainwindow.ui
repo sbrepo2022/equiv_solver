@@ -68,14 +68,13 @@
    <addaction name="separator"/>
    <addaction name="actionSolve"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="WindowFrameMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -158,6 +157,7 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionI">
    <property name="checkable">
     <bool>true</bool>
@@ -379,6 +379,11 @@
    <class>FieldView</class>
    <extends>QGraphicsView</extends>
    <header>field/fieldview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WindowFrameMenuBar</class>
+   <extends>QMenuBar</extends>
+   <header>components/windowframemenubar.h</header>
   </customwidget>
  </customwidgets>
  <resources>
