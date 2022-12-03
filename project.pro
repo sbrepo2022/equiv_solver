@@ -46,7 +46,8 @@ SOURCES += \
     field/edit_modes/fielddeletemodecontroller.cpp \
     field/edit_modes/fielddrawelementmodecontroller.cpp \
     field/fieldscene.cpp \
-    components/windowframemenubar.cpp
+    components/windowframemenubar.cpp \
+    components/framlessresizablewindow.cpp
 
 HEADERS += \
     circuitsettingsdialog.h \
@@ -69,7 +70,8 @@ HEADERS += \
     field/edit_modes/fielddeletemodecontroller.h \
     field/edit_modes/fielddrawelementmodecontroller.h \
     field/fieldscene.h \
-    components/windowframemenubar.h
+    components/windowframemenubar.h \
+    components/framlessresizablewindow.h
 
 FORMS += \
         circuitsettingsdialog.ui \

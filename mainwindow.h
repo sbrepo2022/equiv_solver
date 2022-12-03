@@ -7,7 +7,9 @@
 #include <QTabBar>
 #include <QBoxLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 
+#include "components/framlessresizablewindow.h"
 #include "field/fieldcontroller.h"
 #include "field/fieldfactory.h"
 #include "components/windowmanagebuttons.h"
@@ -27,12 +29,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    FramlessResizableWindow *frame_window;
     WindowManageButtons *window_manage_buttons;
     QActionGroup *field_cursor_group;
     QTabBar *field_models_tabs;
 
     FieldController *field_controller;
 
+    void setupWindowFrame();
     void setupAdditionalUi();
 
 public slots:

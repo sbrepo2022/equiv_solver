@@ -1,3 +1,7 @@
+QMainWindow {
+    background: #fff;
+}
+
 QMenuBar {
     background: #3259e2;
 }

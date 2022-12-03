@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QFont>
 
+#include <QHBoxLayout>
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -17,8 +19,6 @@ int main(int argc, char *argv[])
     //QApplication::setFont(font);
 
     MainWindow window;
-    window.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    window.showMaximized();
 
     return app.exec();
 }

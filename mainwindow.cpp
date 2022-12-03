@@ -7,8 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    this->setupWindowFrame();
     ui->setupUi(this);
     this->setupAdditionalUi();
+    this->frame_window->getRoot()->showMaximized();
+
 
     this->field_controller = new FieldController(ui->circuitGraphicsView, this);
     connect(ui->actionNew, &QAction::triggered, this, [=]() {
@@ -66,6 +69,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::setupWindowFrame()
+{
+    this->frame_window = new FramlessResizableWindow();
+    this->frame_window->setWidget(this);
+    this->frame_window->setFrameWidth(5);
+}
+
 void MainWindow::setupAdditionalUi()
 {
     this->field_cursor_group = new QActionGroup(this);
@@ -93,21 +103,16 @@ void MainWindow::setupAdditionalUi()
     this->window_manage_buttons = new WindowManageButtons(this);
     this->ui->menuBar->setCornerWidget(window_manage_buttons, Qt::TopRightCorner);
     connect(this->window_manage_buttons, &WindowManageButtons::minimized, this, [=]() {
-        this->showMinimized();
+        this->frame_window->getRoot()->showMinimized();
     });
     connect(this->window_manage_buttons, &WindowManageButtons::maximized, this, [=]() {
-        this->showMaximized();
+        this->frame_window->getRoot()->showMaximized();
     });
     connect(this->window_manage_buttons, &WindowManageButtons::normalized, this, [=]() {
-        this->showNormal();
+        this->frame_window->getRoot()->showNormal();
     });
-    connect(this->ui->menuBar, &WindowFrameMenuBar::normalized, this, [=]() {
-        this->showNormal();
-        this->window_manage_buttons->setZoom(false);
-    });
-    connect(this->ui->menuBar, &WindowFrameMenuBar::moved, this, [=](QPoint delta) {
-        this->move(this->pos() + delta);
-    });
+
+    this->ui->menuBar->setWindowWidget(this->frame_window->getRoot());
 
     QLabel *logo_widget = new QLabel(this);
     logo_widget->setPixmap(QPixmap(":/logo/resources/logo/logo_32.png"));

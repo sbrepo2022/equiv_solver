@@ -4,15 +4,14 @@ WindowFrameMenuBar::WindowFrameMenuBar(QWidget *parent)
     : QMenuBar(parent),
       pressed(false)
 {
-
 }
 
 void WindowFrameMenuBar::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
+        this->grabMouse();
         this->pressed = true;
         this->mouse_point = event->screenPos();
-        event->accept();
     }
     this->setFocus();
 
@@ -21,14 +20,15 @@ void WindowFrameMenuBar::mousePressEvent(QMouseEvent* event)
 
 void WindowFrameMenuBar::mouseMoveEvent(QMouseEvent *event)
 {
-    if (! (event->buttons() & Qt::LeftButton)) this->pressed = false;
-    if (this->pressed) {
+    if ((event->buttons() & Qt::LeftButton) && this->pressed) {
         const QPointF delta = event->screenPos() - this->mouse_point;
         this->mouse_point = event->screenPos();
-        event->accept();
 
-        emit this->normalized();
-        emit this->moved(delta.toPoint());
+        if (this->main_window != nullptr) {
+            if (! this->main_window->isMaximized()) {
+                this->main_window->move(this->main_window->pos() + delta.toPoint());
+            }
+        }
     }
 
     QMenuBar::mouseMoveEvent(event);
@@ -36,21 +36,15 @@ void WindowFrameMenuBar::mouseMoveEvent(QMouseEvent *event)
 
 void WindowFrameMenuBar::mouseReleaseEvent(QMouseEvent *event)
 {
+    this->releaseMouse();
     this->pressed = false;
-    event->accept();
 
     QMenuBar::mouseReleaseEvent(event);
 }
 
-void WindowFrameMenuBar::leaveEvent(QEvent *event)
-{
-    this->pressed = false;
-
-    Q_UNUSED(event);
-}
-
 void WindowFrameMenuBar::focusOutEvent(QFocusEvent *event)
 {
+    this->releaseMouse();
     this->pressed = false;
 
     Q_UNUSED(event);
