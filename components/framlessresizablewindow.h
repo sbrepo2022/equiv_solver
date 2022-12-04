@@ -1,6 +1,8 @@
 #ifndef FRAMLESSRESIZABLEWINDOW_H
 #define FRAMLESSRESIZABLEWINDOW_H
 
+#include <QApplication>
+#include <QScreen>
 #include <QWidget>
 #include <QGridLayout>
 #include <QMouseEvent>
@@ -38,11 +40,16 @@ private:
     QPointF mouse_point;
     QRect start_geom;
 
+    void setupFrame(int frame_width);
+
 signals:
 
 public slots:
     void setWidget(QWidget *widget);
     void setFrameWidth(int fr_w);
+    void maximized();
+    void normalized();
+    void minimized();
 };
 
 #endif // FRAMLESSRESIZABLEWINDOW_H

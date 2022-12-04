@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setupWindowFrame();
     ui->setupUi(this);
     this->setupAdditionalUi();
-    this->frame_window->getRoot()->showMaximized();
+    this->frame_window->maximized();
+    this->window_manage_buttons->setZoom(this->frame_window->getRoot()->isMaximized());
 
 
     this->field_controller = new FieldController(ui->circuitGraphicsView, this);
@@ -73,7 +74,10 @@ void MainWindow::setupWindowFrame()
 {
     this->frame_window = new FramlessResizableWindow();
     this->frame_window->setWidget(this);
-    this->frame_window->setFrameWidth(5);
+    this->frame_window->setFrameWidth(10);
+    QRect screen_geom = QApplication::primaryScreen()->geometry();
+    this->frame_window->getRoot()->setGeometry(screen_geom.width() / 6, screen_geom.height() / 6,
+                                    screen_geom.width() / 6 * 4, screen_geom.height() / 6 * 4);
 }
 
 void MainWindow::setupAdditionalUi()
@@ -103,13 +107,13 @@ void MainWindow::setupAdditionalUi()
     this->window_manage_buttons = new WindowManageButtons(this);
     this->ui->menuBar->setCornerWidget(window_manage_buttons, Qt::TopRightCorner);
     connect(this->window_manage_buttons, &WindowManageButtons::minimized, this, [=]() {
-        this->frame_window->getRoot()->showMinimized();
+        this->frame_window->minimized();
     });
     connect(this->window_manage_buttons, &WindowManageButtons::maximized, this, [=]() {
-        this->frame_window->getRoot()->showMaximized();
+        this->frame_window->maximized();
     });
     connect(this->window_manage_buttons, &WindowManageButtons::normalized, this, [=]() {
-        this->frame_window->getRoot()->showNormal();
+        this->frame_window->normalized();
     });
 
     this->ui->menuBar->setWindowWidget(this->frame_window->getRoot());

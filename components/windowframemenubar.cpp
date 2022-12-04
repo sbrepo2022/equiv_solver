@@ -11,7 +11,7 @@ void WindowFrameMenuBar::mousePressEvent(QMouseEvent* event)
     if (event->button() == Qt::LeftButton) {
         this->grabMouse();
         this->pressed = true;
-        this->mouse_point = event->screenPos();
+        this->mouse_point = event->globalPosition();
     }
     this->setFocus();
 
@@ -21,8 +21,8 @@ void WindowFrameMenuBar::mousePressEvent(QMouseEvent* event)
 void WindowFrameMenuBar::mouseMoveEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) && this->pressed) {
-        const QPointF delta = event->screenPos() - this->mouse_point;
-        this->mouse_point = event->screenPos();
+        const QPointF delta = event->globalPosition() - this->mouse_point;
+        this->mouse_point = event->globalPosition();
 
         if (this->main_window != nullptr) {
             if (! this->main_window->isMaximized()) {

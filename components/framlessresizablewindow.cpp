@@ -18,7 +18,7 @@ FramlessResizableWindow::FramlessResizableWindow(QWidget *parent)
 
     grid_layout = new QGridLayout();
     grid_layout->setSpacing(0);
-    grid_layout->setMargin(0);
+    grid_layout->setContentsMargins(0, 0, 0, 0);
     for (int y = 0; y < 3; y++) {
         for (int x = 0; x < 3; x++) {
             if (x == 1 && y == 1) continue;
@@ -43,7 +43,7 @@ bool FramlessResizableWindow::eventFilter(QObject *obj, QEvent *event)
     if (widget == nullptr) return false;
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *mouse_event = static_cast<QMouseEvent*>(event);
-        this->mouse_point = mouse_event->screenPos();
+        this->mouse_point = mouse_event->globalPosition();
         this->start_geom = this->root_widget->geometry();
         widget->grabMouse();
         this->pressed = true;
@@ -56,19 +56,23 @@ bool FramlessResizableWindow::eventFilter(QObject *obj, QEvent *event)
         QMouseEvent *mouse_event = static_cast<QMouseEvent*>(event);
 
         if (this->pressed) {
-            QPoint delta = (mouse_event->screenPos() - this->mouse_point).toPoint();
+            QPoint delta = (mouse_event->globalPosition() - this->mouse_point).toPoint();
             QRect new_geom = start_geom;
             QSize min_size = this->root_widget->minimumSize();
             QSize max_size = this->root_widget->maximumSize();
 
             if (widget == this->grid_layout->itemAtPosition(1, 0)->widget()) { // left
                 new_geom.setX(start_geom.x() + delta.x());
+                if (new_geom.width() > max_size.width()) new_geom.setX(new_geom.right() - max_size.width());
+                if (new_geom.width() < min_size.width()) new_geom.setX(new_geom.right() - min_size.width());
             }
             if (widget == this->grid_layout->itemAtPosition(1, 2)->widget()) { // right
                 new_geom.setWidth(start_geom.width() + delta.x());
             }
             if (widget == this->grid_layout->itemAtPosition(0, 1)->widget()) { // top
                 new_geom.setY(start_geom.y() + delta.y());
+                if (new_geom.height() > max_size.height()) new_geom.setY(new_geom.bottom() - max_size.height());
+                if (new_geom.height() < min_size.height()) new_geom.setY(new_geom.bottom() - min_size.height());
             }
             if (widget == this->grid_layout->itemAtPosition(2, 1)->widget()) { // bottom
                 new_geom.setHeight(start_geom.height() + delta.y());
@@ -76,6 +80,10 @@ bool FramlessResizableWindow::eventFilter(QObject *obj, QEvent *event)
             if (widget == this->grid_layout->itemAtPosition(0, 0)->widget()) { // left top
                 new_geom.setX(start_geom.x() + delta.x());
                 new_geom.setY(start_geom.y() + delta.y());
+                if (new_geom.width() > max_size.width()) new_geom.setX(new_geom.right() - max_size.width());
+                if (new_geom.width() < min_size.width()) new_geom.setX(new_geom.right() - min_size.width());
+                if (new_geom.height() > max_size.height()) new_geom.setY(new_geom.bottom() - max_size.height());
+                if (new_geom.height() < min_size.height()) new_geom.setY(new_geom.bottom() - min_size.height());
             }
             if (widget == this->grid_layout->itemAtPosition(0, 2)->widget()) { // right top
                 new_geom.setWidth(start_geom.width() + delta.x());
@@ -90,16 +98,23 @@ bool FramlessResizableWindow::eventFilter(QObject *obj, QEvent *event)
                 new_geom.setHeight(start_geom.height() + delta.y());
             }
 
-            QSize new_size = new_geom.size();
-            if (new_size.width() <= max_size.width() && new_size.width() >= min_size.width() &&
-                new_size.height() <= max_size.height() && new_size.height() >= min_size.height()) {
-                this->root_widget->setGeometry(new_geom);
-            }
+            QRect avail_geometry = QApplication::primaryScreen()->availableGeometry();
+            if (new_geom.left() < avail_geometry.left()) new_geom.setLeft(avail_geometry.left());
+            if (new_geom.right() > avail_geometry.right()) new_geom.setRight(avail_geometry.right());
+            if (new_geom.top() < avail_geometry.top()) new_geom.setTop(avail_geometry.top());
+            if (new_geom.bottom() > avail_geometry.bottom()) new_geom.setBottom(avail_geometry.bottom());
+
+            this->root_widget->setGeometry(new_geom);
         }
     }
     return false;
 }
 
+void FramlessResizableWindow::setupFrame(int frame_width)
+{
+    for (int i = 0; i < 3; i++) this->grid_layout->setColumnMinimumWidth(i, frame_width);
+    for (int i = 0; i < 3; i++) this->grid_layout->setRowMinimumHeight(i, frame_width);
+}
 
 void FramlessResizableWindow::setWidget(QWidget *widget)
 {
@@ -109,6 +124,22 @@ void FramlessResizableWindow::setWidget(QWidget *widget)
 
 void FramlessResizableWindow::setFrameWidth(int fr_w) {
     this->fr_w = fr_w;
-    for (int i = 0; i < 3; i++) this->grid_layout->setColumnMinimumWidth(i, fr_w);
-    for (int i = 0; i < 3; i++) this->grid_layout->setRowMinimumHeight(i, fr_w);
+    this->setupFrame(this->fr_w);
+}
+
+void FramlessResizableWindow::maximized()
+{
+    this->setupFrame(0);
+    this->root_widget->showMaximized();
+}
+
+void FramlessResizableWindow::normalized()
+{
+    this->setupFrame(this->fr_w);
+    this->root_widget->showNormal();
+}
+
+void FramlessResizableWindow::minimized()
+{
+    this->root_widget->showMinimized();
 }
