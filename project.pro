@@ -86,7 +86,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    application.qrc
+    application.qrc \
+    theme.qrc
 
 RC_ICONS = resources/logo/icon.ico
 

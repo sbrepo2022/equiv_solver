@@ -16,6 +16,13 @@ FramlessResizableWindow::FramlessResizableWindow(QWidget *parent)
     this->root_widget->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     this->root_widget->setAttribute(Qt::WA_TranslucentBackground, true);
 
+    QGraphicsDropShadowEffect *drop_shadow = new QGraphicsDropShadowEffect();
+    drop_shadow->setOffset(QPoint(0, 2));
+    drop_shadow->setBlurRadius(16);
+    drop_shadow->setColor(QColor("#77777777"));
+
+    this->setGraphicsEffect(drop_shadow);
+
     grid_layout = new QGridLayout();
     grid_layout->setSpacing(0);
     grid_layout->setContentsMargins(0, 0, 0, 0);
@@ -43,7 +50,7 @@ bool FramlessResizableWindow::eventFilter(QObject *obj, QEvent *event)
     if (widget == nullptr) return false;
     if (event->type() == QEvent::MouseButtonPress) {
         QMouseEvent *mouse_event = static_cast<QMouseEvent*>(event);
-        this->mouse_point = mouse_event->globalPosition();
+        this->mouse_point = mouse_event->globalPos();
         this->start_geom = this->root_widget->geometry();
         widget->grabMouse();
         this->pressed = true;
@@ -56,7 +63,7 @@ bool FramlessResizableWindow::eventFilter(QObject *obj, QEvent *event)
         QMouseEvent *mouse_event = static_cast<QMouseEvent*>(event);
 
         if (this->pressed) {
-            QPoint delta = (mouse_event->globalPosition() - this->mouse_point).toPoint();
+            QPoint delta = (mouse_event->globalPos() - this->mouse_point).toPoint();
             QRect new_geom = start_geom;
             QSize min_size = this->root_widget->minimumSize();
             QSize max_size = this->root_widget->maximumSize();

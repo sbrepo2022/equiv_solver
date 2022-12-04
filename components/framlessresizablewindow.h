@@ -5,6 +5,7 @@
 #include <QScreen>
 #include <QWidget>
 #include <QGridLayout>
+#include <QGraphicsDropShadowEffect>
 #include <QMouseEvent>
 #include <QLayout>
 #include <QStyle>

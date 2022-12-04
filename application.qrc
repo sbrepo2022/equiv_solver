@@ -28,14 +28,28 @@
         <file>resources/logo/logo_256.png</file>
         <file>resources/logo/logo_512.png</file>
     </qresource>
-    <qresource prefix="/theme">
-        <file>resources/theme/theme.css</file>
-        <file>components/windowmanagebuttons.css</file>
-    </qresource>
     <qresource prefix="/ui_icons">
         <file>resources/ui_icons/close.svg</file>
         <file>resources/ui_icons/minimize.svg</file>
         <file>resources/ui_icons/zoom.svg</file>
         <file>resources/ui_icons/zoom_minimize.svg</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file>resources/font/Segoe-UI-Variable-Static-Display.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Display-Bold.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Display-Light.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Display-Semibold.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Display-Semilight.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Small.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Small-Bold.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Small-Light.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Small-Semibold.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Small-Semilight.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Text.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Text-Bold.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Text-Light.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Text-Semibold.ttf</file>
+        <file>resources/font/Segoe-UI-Variable-Static-Text-Semilight.ttf</file>
+        <file>resources/font/SegoeUI-VF.ttf</file>
     </qresource>
 </RCC>
