@@ -17,6 +17,9 @@ public:
 private:
     FieldGraphicsItem *current_graphics_item;
 
+protected:
+    void clearCurrentGraphicsItem() { this->current_graphics_item = nullptr; }
+
 signals:
 
 public slots:

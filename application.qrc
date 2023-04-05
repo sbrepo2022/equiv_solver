@@ -10,6 +10,8 @@
         <file>resources/resistor.png</file>
         <file>resources/supply.png</file>
         <file>resources/voltmeter.png</file>
+        <file>resources/current.png</file>
+        <file>resources/voltage.png</file>
     </qresource>
     <qresource prefix="/tools_icons">
         <file>resources/tools/erase.png</file>

@@ -27,7 +27,6 @@ void FieldDeleteModeController::attachFieldModel(FieldModel *field_model)
 
 void FieldDeleteModeController::onGraphicsItemMousePressed(FieldGraphicsItem *graphics_item, QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "hello";
     FieldModel *field_model = this->getCurrentFieldModel();
     if (field_model == nullptr || graphics_item == nullptr) return;
 
@@ -36,11 +35,13 @@ void FieldDeleteModeController::onGraphicsItemMousePressed(FieldGraphicsItem *gr
         if (type == FieldGraphicsItemType::CIRCUIT_ELEMENT) {
             CircuitElementModel *circuit_element = qobject_cast<CircuitElementGraphicsItem*>(graphics_item)->getModel();
             field_model->removeCircuitElement(circuit_element->getId());
+            this->clearCurrentGraphicsItem();
             delete circuit_element;
         }
         if (type == FieldGraphicsItemType::WIRE) {
             WireModel *wire = qobject_cast<WireGraphicsItem*>(graphics_item)->getModel();
-            field_model->removeCircuitElement(wire->getId());
+            field_model->removeWireElement(wire->getId());
+            this->clearCurrentGraphicsItem();
             delete wire;
         }
     }

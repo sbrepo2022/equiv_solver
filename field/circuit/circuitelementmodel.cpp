@@ -43,9 +43,9 @@ QRectF CircuitElementGraphicsItem::boundingRect() const
 }
 
 void CircuitElementGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-    emit hoverEntered(this);
-
     QGraphicsItem::hoverEnterEvent(event);
+
+    emit hoverEntered(this);
 }
 
 void CircuitElementGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
@@ -53,15 +53,16 @@ void CircuitElementGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 }
 
 void CircuitElementGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-    emit hoverLeaved(this);
-
     QGraphicsItem::hoverLeaveEvent(event);
+
+    emit hoverLeaved(this);
 }
 
 void CircuitElementGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    //emit mousePressed(this, event);
     QGraphicsItem::mousePressEvent(event);
+
+    emit mousePressed(this, event);
 }
 
 QPointF CircuitElementGraphicsItem::updatedPos() {
@@ -154,7 +155,7 @@ CircuitElementModel::CircuitElementModel(QObject *parent) : QObject(parent)
     this->graphics_item = new CircuitElementGraphicsItem(this);
 }
 
-CircuitElementModel::CircuitElementModel(const CircuitElementModel &obj)
+CircuitElementModel::CircuitElementModel(const CircuitElementModel &obj) : QObject(obj.parent())
 {
     this->id = object_count++;
 

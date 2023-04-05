@@ -35,7 +35,7 @@ void CircuitBasicElementFactory::createI()
     this->model = new CircuitElementModel();
     this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
-    this->graphics_item->setImage(QImage(":/circuit_icons/resources/dc.png"));
+    this->graphics_item->setImage(QImage(":/circuit_icons/resources/current.png"));
 }
 
 void CircuitBasicElementFactory::createE()
@@ -43,7 +43,7 @@ void CircuitBasicElementFactory::createE()
     this->model = new CircuitElementModel();
     this->model->setCellsRect(QRect(-2, -2, 4, 4));
     this->graphics_item = this->model->getGraphicsItem();
-    this->graphics_item->setImage(QImage(":/circuit_icons/resources/battery.png"));
+    this->graphics_item->setImage(QImage(":/circuit_icons/resources/voltage.png"));
 }
 
 void CircuitBasicElementFactory::createR()

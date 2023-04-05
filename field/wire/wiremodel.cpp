@@ -79,9 +79,9 @@ QPainterPath WireGraphicsItem::shape() const
 
 void WireGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit hoverEntered(this);
-
     QGraphicsItem::hoverEnterEvent(event);
+
+    emit hoverEntered(this);
 }
 
 void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
@@ -91,16 +91,16 @@ void WireGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
 void WireGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit hoverLeaved(this);
-
     QGraphicsItem::hoverLeaveEvent(event);
+
+    emit hoverLeaved(this);
 }
 
 void WireGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    //emit mousePressed(this, event);
-
     QGraphicsItem::mousePressEvent(event);
+
+    emit mousePressed(this, event);
 }
 
 QPointF WireGraphicsItem::updatedPos() {
@@ -181,7 +181,7 @@ WireModel::WireModel(QObject *parent) : QObject(parent)
     this->graphics_item = new WireGraphicsItem(this);
 }
 
-WireModel::WireModel(const WireModel &obj)
+WireModel::WireModel(const WireModel &obj) : QObject(obj.parent())
 {
     this->id = object_count++;
 

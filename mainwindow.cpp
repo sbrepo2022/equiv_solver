@@ -24,39 +24,39 @@ MainWindow::MainWindow(QWidget *parent) :
         this->field_controller->setCurrentFieldModel(model_index);
     });
 
-    connect(ui->actionSelection, &QAction::toggled, this, [=]() {
-        field_controller->setSelectMode();
+    connect(ui->actionSelection, &QAction::toggled, this, [=](bool checked) {
+        if (checked) field_controller->setSelectMode();
     });
-    connect(ui->actionDraw, &QAction::toggled, this, [=]() {
-        field_controller->setWireMode();
+    connect(ui->actionDraw, &QAction::toggled, this, [=](bool checked) {
+        if (checked) field_controller->setWireMode();
     });
-    connect(ui->actionDelete, &QAction::toggled, this, [=]() {
-        field_controller->setDeleteMode();
+    connect(ui->actionDelete, &QAction::toggled, this, [=](bool checked) {
+        if (checked) field_controller->setDeleteMode();
     });
 
-    connect(ui->actionI, &QAction::toggled, this, [=]() {
+    connect(ui->actionI, &QAction::toggled, this, [=](bool checked) {
         CircuitBasicElementFactory el_factory(BasicElementType::I);
-        field_controller->setDrawElementsMode(el_factory.model);
+        if (checked) field_controller->setDrawElementsMode(el_factory.model);
     });
-    connect(ui->actionE, &QAction::toggled, this, [=]() {
+    connect(ui->actionE, &QAction::toggled, this, [=](bool checked) {
         CircuitBasicElementFactory el_factory(BasicElementType::E);
-        field_controller->setDrawElementsMode(el_factory.model);
+        if (checked) field_controller->setDrawElementsMode(el_factory.model);
     });
-    connect(ui->actionR, &QAction::toggled, this, [=]() {
+    connect(ui->actionR, &QAction::toggled, this, [=](bool checked) {
         CircuitBasicElementFactory el_factory(BasicElementType::R);
-        field_controller->setDrawElementsMode(el_factory.model);
+        if (checked) field_controller->setDrawElementsMode(el_factory.model);
     });
-    connect(ui->actionC, &QAction::toggled, this, [=]() {
+    connect(ui->actionC, &QAction::toggled, this, [=](bool checked) {
         CircuitBasicElementFactory el_factory(BasicElementType::C);
-        field_controller->setDrawElementsMode(el_factory.model);
+        if (checked) field_controller->setDrawElementsMode(el_factory.model);
     });
-    connect(ui->actionL, &QAction::toggled, this, [=]() {
+    connect(ui->actionL, &QAction::toggled, this, [=](bool checked) {
         CircuitBasicElementFactory el_factory(BasicElementType::L);
-        field_controller->setDrawElementsMode(el_factory.model);
+        if (checked) field_controller->setDrawElementsMode(el_factory.model);
     });
-    connect(ui->actionGnd, &QAction::toggled, this, [=]() {
+    connect(ui->actionGnd, &QAction::toggled, this, [=](bool checked) {
         CircuitBasicElementFactory el_factory(BasicElementType::Gnd);
-        field_controller->setDrawElementsMode(el_factory.model);
+        if (checked) field_controller->setDrawElementsMode(el_factory.model);
     });
 
     connect(ui->actionFieldSettings, &QAction::triggered, this->field_controller, &FieldController::showFieldSettingsDialog);
