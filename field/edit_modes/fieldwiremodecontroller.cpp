@@ -44,8 +44,10 @@ void FieldWireModeController::startWire(const QPoint &pos)
 
     this->buffer_wire = new WireModel();
     this->buffer_wire->setCenter(pos);
-    QVector<QPoint> points = {this->buffer_wire->convertPointToLocal(pos)};
-    this->buffer_wire->setPoints(QPolygon(points));
+    QPoint point = this->buffer_wire->convertPointToLocal(pos);
+    QList<QLine> lines_list;
+    lines_list << QLine(point, point);
+    this->buffer_wire->setLinesList(lines_list);
 
     this->buffer_wire_graphics_item = this->buffer_wire->getGraphicsItem();
     this->buffer_wire_graphics_item->setLineColor(QColor(200, 20, 0));
@@ -88,34 +90,34 @@ void FieldWireModeController::gridCellHover(const QPoint &pos)
 {
     if (!this->wire_started || this->buffer_wire == nullptr) return;
 
-    QPolygon points = this->buffer_wire->getPoints();
-    QPolygon result;
+    QList<QLine> lines_list = this->buffer_wire->getLinesList();
+    QList<QLine> result;
 
-    if (points.count() == 0) return;
+    if (lines_list.count() < 1) return;
 
     QPoint pos_local = this->buffer_wire->convertPointToLocal(pos);
 
-    if (points[0].x() == pos_local.x() || points[0].y() == pos_local.y()) {
-        result.append(points[0]);
-        result.append(pos_local);
+    if (lines_list[0].p1().x() == pos_local.x() || lines_list[0].p1().y() == pos_local.y()) {
+        result.append(QLine(lines_list[0].p1(), pos_local));
     }
-    else if (points.count() == 1) {
-        result.append(points[0]);
-        result.append(QPoint(pos_local.x(), points[0].y()));
-        result.append(pos_local);
+    else if (lines_list[0].p1() == lines_list[0].p2()) {
+        QPoint corner_point = QPoint(pos_local.x(), lines_list[0].p1().y());
+        result.append(QLine(lines_list[0].p1(), corner_point));
+        result.append(QLine(corner_point, pos_local));
     }
-    else if (points.count() > 1) {
-        result.append(points[0]);
-        if (points[0].x() == points[1].x()) {
-            result.append(QPoint(points[0].x(), pos_local.y()));
+    else {
+        QPoint corner_point;
+        if (lines_list[0].p1().x() == lines_list[0].p2().x()) {
+            corner_point = QPoint(lines_list[0].p1().x(), pos_local.y());
         }
         else {
-            result.append(QPoint(pos_local.x(), points[0].y()));
+            corner_point = QPoint(pos_local.x(), lines_list[0].p1().y());
         }
-        result.append(pos_local);
+        result.append(QLine(lines_list[0].p1(), corner_point));
+        result.append(QLine(corner_point, pos_local));
     }
 
-    this->buffer_wire->setPoints(result);
+    this->buffer_wire->setLinesList(result);
 
     FieldModel *field_model = this->getCurrentFieldModel();
     if (field_model != nullptr) field_model->updateScene();

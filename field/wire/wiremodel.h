@@ -28,6 +28,8 @@ public:
     QRectF boundingRect() const;
     QPainterPath shape() const;
 
+    int getLineIndexByCoordinate(QPointF in_item_pos) const;
+
 protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
@@ -42,10 +44,13 @@ private:
     QPoint center;
 
     qreal line_hover_distance_factor;
+    QPointF cursor_pos_cache;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QPointF updatedPos();
+    QList<QLineF> getTransformedLines() const;
+    QPainterPath calcPathForLine(QLineF line_f) const;
 
 
 public slots:
@@ -73,8 +78,17 @@ public:
 
     QRect getCellsRect() {return this->cells_rect;}
     QPoint getCenter() {return this->center;}
-    QPolygon getPoints() {return this->points;}
+    QList<QLine> getLinesList() {return this->lines_list;}
     QPoint convertPointToLocal(const QPoint &point) {return point - this->center;}
+
+    QList<WireModel*> removeWireLine(int line_index); // возвращает новые группы после удаления линии
+
+    // wire algorithms
+    static QList<QList<QLine>> regroupWire(const QList<QLine> &lines);
+    static QList<QLine> recalculateWireStructure(const QList<QLine> &lines, QHash<QPoint, int> *line_endings);
+    static QHash<QPoint, int> countLineEndings(const QList<QLine>& lines);
+    static bool mergeOverlappingLines(const QHash<QPoint, int> &line_endings, const QLine &line1, const QLine &line2, QLine *line_result, bool axis);
+    static bool mergePerpendicularTouching(const QLine &line1, const QLine &line2, QList<QLine> *line1_replacement, QList<QLine> *line2_replacement);
 
 private:
     static int object_count;
@@ -84,13 +98,14 @@ private:
 
     QRect cells_rect;
     QPoint center;
-    QPolygon points;
+    QList<QLine> lines_list;
+    QHash<QPoint, int> lines_endings;
 
     void updateCellsRect();
 
 signals:
     void centerChanged(QPoint);
-    void pointsChanged();
+    void wireChanged();
 
 public slots:
     void setCellsRect(const QRect &cells_rect) {this->cells_rect = cells_rect;}
@@ -98,12 +113,11 @@ public slots:
         this->center = center;
         emit centerChanged(this->center);
     }
-    void setPoints(const QPolygon &points) {
-        this->points = points;
+    void setLinesList(const QList<QLine> &lines_list) {
+        this->lines_list = this->recalculateWireStructure(lines_list, &lines_endings);
         this->updateCellsRect();
-        emit pointsChanged();
+        emit wireChanged();
     }
-
 };
 
 #endif // WIREMODEL_H

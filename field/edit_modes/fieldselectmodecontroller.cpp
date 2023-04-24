@@ -13,6 +13,7 @@ void FieldSelectModeController::detachFieldModel()
     if (field_model != nullptr) {
         disconnect(field_model, &FieldModel::onGraphicsItemEntered, this, &FieldSelectModeController::onGraphicsItemEntered);
         disconnect(field_model, &FieldModel::onGraphicsItemLeaved, this, &FieldSelectModeController::onGraphicsItemLeaved);
+        disconnect(field_model, &FieldModel::onGraphicsItemHoverMoved, this, &FieldSelectModeController::onGraphicsItemHoverMoved);
 
         field_model->setAcceptHoverEventsFromFieldElements(false);
     }
@@ -29,6 +30,7 @@ void FieldSelectModeController::attachFieldModel(FieldModel *field_model)
     if (field_model != nullptr) {
         connect(field_model, &FieldModel::onGraphicsItemEntered, this, &FieldSelectModeController::onGraphicsItemEntered);
         connect(field_model, &FieldModel::onGraphicsItemLeaved, this, &FieldSelectModeController::onGraphicsItemLeaved);
+        connect(field_model, &FieldModel::onGraphicsItemHoverMoved, this, &FieldSelectModeController::onGraphicsItemHoverMoved);
 
         field_model->setAcceptHoverEventsFromFieldElements(true);
     }
@@ -50,4 +52,9 @@ void FieldSelectModeController::onGraphicsItemLeaved(FieldGraphicsItem *graphics
     if (graphics_item != nullptr) {
         graphics_item->setMarkHovered(false);
     }
+}
+
+void FieldSelectModeController::onGraphicsItemHoverMoved(FieldGraphicsItem *graphics_item, QGraphicsSceneHoverEvent *event)
+{
+    this->current_graphics_item = graphics_item;
 }

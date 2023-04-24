@@ -30,6 +30,7 @@ protected:
 signals:
     void hoverEntered(FieldGraphicsItem*);
     void hoverLeaved(FieldGraphicsItem*);
+    void hoverMoved(FieldGraphicsItem*, QGraphicsSceneHoverEvent*);
     void mousePressed(FieldGraphicsItem*, QGraphicsSceneMouseEvent*);
 
 public slots:

@@ -87,12 +87,29 @@ CircuitElementModel* FieldModel::removeCircuitElement(int id)
     return circuit_element;
 }
 
+void FieldModel::deleteCircuitElement(CircuitElementModel *circuit_element)
+{
+    if (circuit_element == nullptr) return;
+
+    this->removeCircuitElement(circuit_element->getId());
+    delete circuit_element;
+}
+
 void FieldModel::addWireElement(WireModel *wire)
 {
     WireGraphicsItem *graphics_item = wire->getGraphicsItem();
     graphics_item->setLineColor(QColor(0, 200, 20));
     this->wires.insert(wire->getId(), wire);
     this->addFieldGraphicsItem(graphics_item, 50);
+}
+
+void FieldModel::addWireElementWithMerge(WireModel *wire)
+{
+    if (wire == nullptr) return;
+
+    for (int i = 0; i < wires.count(); i++) {
+        // дописать!!!
+    }
 }
 
 WireModel* FieldModel::removeWireElement(int id)
@@ -106,11 +123,25 @@ WireModel* FieldModel::removeWireElement(int id)
     return wire;
 }
 
+void FieldModel::deleteWireLine(WireModel *wire, int line_index)
+{
+    if (wire == nullptr) return;
+
+    QList<WireModel*> new_wire_models = wire->removeWireLine(line_index);
+    for (WireModel *new_wire : new_wire_models) {
+        this->addWireElement(new_wire);
+    }
+
+    this->removeWireElement(wire->getId());
+    delete wire;
+}
+
 void FieldModel::connectWithGraphicsItem(FieldGraphicsItem *field_graphics_item)
 {
     connect(this, &FieldModel::cellSizeChanged, field_graphics_item, &FieldGraphicsItem::setCellSize);
     connect(field_graphics_item, &FieldGraphicsItem::hoverEntered, this, &FieldModel::onGraphicsItemEntered);
     connect(field_graphics_item, &FieldGraphicsItem::hoverLeaved, this, &FieldModel::onGraphicsItemLeaved);
+    connect(field_graphics_item, &FieldGraphicsItem::hoverMoved, this, &FieldModel::onGraphicsItemHoverMoved);
     connect(field_graphics_item, &FieldGraphicsItem::mousePressed, this, &FieldModel::onGraphicsItemMousePressed);
 
     // debug
@@ -122,6 +153,7 @@ void FieldModel::disconnectFromGraphicsItem(FieldGraphicsItem *field_graphics_it
     disconnect(this, &FieldModel::cellSizeChanged, field_graphics_item, &FieldGraphicsItem::setCellSize);
     disconnect(field_graphics_item, &FieldGraphicsItem::hoverEntered, this, &FieldModel::onGraphicsItemEntered);
     disconnect(field_graphics_item, &FieldGraphicsItem::hoverLeaved, this, &FieldModel::onGraphicsItemLeaved);
+    disconnect(field_graphics_item, &FieldGraphicsItem::hoverMoved, this, &FieldModel::onGraphicsItemHoverMoved);
     disconnect(field_graphics_item, &FieldGraphicsItem::mousePressed, this, &FieldModel::onGraphicsItemMousePressed);
 
     // debug

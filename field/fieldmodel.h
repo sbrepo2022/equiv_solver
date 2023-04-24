@@ -29,8 +29,12 @@ public:
 
     void addCircuitElement(CircuitElementModel *circuit_element);
     CircuitElementModel* removeCircuitElement(int id);
+    void deleteCircuitElement(CircuitElementModel *circuit_element);
+
     void addWireElement(WireModel *wire);
+    void addWireElementWithMerge(WireModel *wire);
     WireModel* removeWireElement(int id);
+    void deleteWireLine(WireModel *wire, int line_index);
 
 private:
     static int object_count;
@@ -56,6 +60,7 @@ signals:
 
     void onGraphicsItemEntered(FieldGraphicsItem*);
     void onGraphicsItemLeaved(FieldGraphicsItem*);
+    void onGraphicsItemHoverMoved(FieldGraphicsItem*, QGraphicsSceneHoverEvent*);
     void onGraphicsItemMousePressed(FieldGraphicsItem*, QGraphicsSceneMouseEvent*);
 
 public slots:

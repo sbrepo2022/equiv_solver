@@ -25,6 +25,7 @@ signals:
 public slots:
     void onGraphicsItemEntered(FieldGraphicsItem *graphics_item);
     void onGraphicsItemLeaved(FieldGraphicsItem *graphics_item);
+    void onGraphicsItemHoverMoved(FieldGraphicsItem *graphics_item, QGraphicsSceneHoverEvent *event);
 };
 
 #endif // FIELDSELECTMODECONTROLLER_H
