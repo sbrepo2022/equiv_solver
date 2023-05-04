@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/theme">
-        <file>resources/theme/theme.css</file>
-        <file>components/windowmanagebuttons.css</file>
-    </qresource>
-</RCC>
