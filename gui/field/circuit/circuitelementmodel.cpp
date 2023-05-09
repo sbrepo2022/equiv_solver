@@ -12,6 +12,7 @@ CircuitElementGraphicsItem::CircuitElementGraphicsItem(const CircuitElementGraph
     this->image = obj.image;
     this->color = obj.color;
     this->hover_color = obj.hover_color;
+    this->selection_color = obj.selection_color;
     this->disable_color = obj.disable_color;
     this->center = obj.center;
 
@@ -24,6 +25,7 @@ void CircuitElementGraphicsItem::init()
 {
     this->color = QColor(0, 0, 0);
     this->hover_color = QColor(220, 20, 0);
+    this->selection_color = QColor(200, 20, 0);
     this->disable_color = QColor(50, 50, 50);
 }
 
@@ -172,8 +174,19 @@ void CircuitElementGraphicsItem::paint(QPainter *painter, const QStyleOptionGrap
 }
 
 void CircuitElementGraphicsItem::updateDrawImage() {
-    QColor color = this->mark_hovered ? this->hover_color : this->color;
-    color = this->mark_collided ? this->disable_color : color;
+    QColor color;
+    if (this->mark_hovered) {
+        color = this->hover_color;
+    }
+    else if (this->mark_selected) {
+        color = this->selection_color;
+    }
+    else if (this->mark_collided) {
+        color = this->disable_color;
+    }
+    else {
+        color = this->color;
+    }
 
     for (int y = 0; y < this->draw_px.size().height(); y++) {
         for (int x = 0; x < this->draw_px.size().width(); x++) {
@@ -224,6 +237,18 @@ void CircuitElementGraphicsItem::setHoverColor(const QColor &hover_color)
     this->paramsUpdated();
 }
 
+void CircuitElementGraphicsItem::setSelectionColor(const QColor &selection_color)
+{
+    this->selection_color = selection_color;
+    this->paramsUpdated();
+}
+
+void CircuitElementGraphicsItem::setDisableColor(const QColor &disable_color)
+{
+    this->disable_color = disable_color;
+    this->paramsUpdated();
+}
+
 void CircuitElementGraphicsItem::setVisibility(bool visible) {
     if (visible) {
         this->show();
@@ -237,7 +262,8 @@ void CircuitElementGraphicsItem::setVisibility(bool visible) {
 
 
 CircuitElementModel::CircuitElementModel(QObject *parent)
-    : FieldElementModel(parent)
+    : FieldElementModel(parent),
+      SelectableModelComponentsKeeper()
 {
 
     this->angle = 0;
@@ -247,7 +273,8 @@ CircuitElementModel::CircuitElementModel(QObject *parent)
 }
 
 CircuitElementModel::CircuitElementModel(const CircuitElementModel &obj)
-    : FieldElementModel(obj)
+    : FieldElementModel(obj),
+      SelectableModelComponentsKeeper(obj)
 {
 
     this->angle = obj.angle;

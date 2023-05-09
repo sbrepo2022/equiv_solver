@@ -70,10 +70,16 @@ void FieldModel::removeFieldGraphicsItem(FieldGraphicsItem *field_graphics_item)
 
 void FieldModel::addCircuitElement(CircuitElementModel *circuit_element)
 {
+    if (circuit_element == nullptr) return;
     CircuitElementGraphicsItem *graphics_item = circuit_element->getGraphicsItem<CircuitElementGraphicsItem>();
     graphics_item->setColor(QColor(20, 0, 200));
     this->circuit_elements.insert(circuit_element->getId(), circuit_element);
     this->addFieldGraphicsItem(graphics_item, 75);
+
+    FieldElementPropertiesComponent *field_element_properties_component = qobject_cast<FieldElementPropertiesComponent*>(circuit_element->getPropertiesComponent());
+    if (field_element_properties_component != nullptr) {
+        field_element_properties_component->installedToField();
+    }
 }
 
 CircuitElementModel* FieldModel::removeCircuitElement(int id)
@@ -92,7 +98,7 @@ void FieldModel::deleteCircuitElement(CircuitElementModel *circuit_element)
     if (circuit_element == nullptr) return;
 
     this->removeCircuitElement(circuit_element->getId());
-    delete circuit_element;
+    circuit_element->deleteLater();
 }
 
 void FieldModel::addWireElement(WireModel *wire)
@@ -158,7 +164,7 @@ void FieldModel::deleteWireLine(WireModel *wire, int line_index)
     }
 
     this->removeWireElement(wire->getId());
-    delete wire;
+    wire->deleteLater();
 }
 
 bool FieldModel::checkItemCollision(QGraphicsItem *graphics_item, QGraphicsScene *scene, QList<QGraphicsItem*> *colliding_out_list)

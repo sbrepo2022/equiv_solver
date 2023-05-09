@@ -21,6 +21,8 @@ VoltageSourceElementModel::VoltageSourceElementModel(QObject *parent)
         )
     );
     this->setInputsPoints(inputs_points);
-
     this->getGraphicsItem<CircuitElementGraphicsItem>()->setImage(QImage(":/circuit_icons/resources/voltage.png"));
+
+    VoltageSourcePropertiesComponent *voltage_source_properties_component = new VoltageSourcePropertiesComponent();
+    this->setPropertiesComponent(voltage_source_properties_component);
 }

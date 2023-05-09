@@ -74,6 +74,7 @@ private:
 signals:
     void gridSizeChanged(QSize);
     void cellSizeChanged(QSizeF);
+    void selectableModelSelected(SelectableModelComponentsKeeper*);
 
 public slots:
     // change settings slots

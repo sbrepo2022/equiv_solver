@@ -22,4 +22,8 @@ CapacitorElementModel::CapacitorElementModel(QObject *parent)
     );
     this->setInputsPoints(inputs_points);
     this->getGraphicsItem<CircuitElementGraphicsItem>()->setImage(QImage(":/circuit_icons/resources/capacitor.png"));
+
+    // init selectable model components keeper
+    CapacitorPropertiesComponent *capacitor_properties_component = new CapacitorPropertiesComponent();
+    this->setPropertiesComponent(capacitor_properties_component);
 }

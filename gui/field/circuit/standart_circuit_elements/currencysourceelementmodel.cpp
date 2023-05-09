@@ -21,6 +21,9 @@ CurrencySourceElementModel::CurrencySourceElementModel(QObject *parent)
         )
     );
     this->setInputsPoints(inputs_points);
-
     this->getGraphicsItem<CircuitElementGraphicsItem>()->setImage(QImage(":/circuit_icons/resources/current.png"));
+
+    // init selectable model components keeper
+    CurrencySourcePropertiesComponent *currency_source_properties_component = new CurrencySourcePropertiesComponent();
+    this->setPropertiesComponent(currency_source_properties_component);
 }

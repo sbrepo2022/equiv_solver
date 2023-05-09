@@ -22,4 +22,8 @@ ResistorElementModel::ResistorElementModel(QObject *parent)
     );
     this->setInputsPoints(inputs_points);
     this->getGraphicsItem<CircuitElementGraphicsItem>()->setImage(QImage(":/circuit_icons/resources/resistor.png"));
+
+    // init selectable model components keeper
+    ResistorPropertiesComponent *resistor_properties_component = new ResistorPropertiesComponent();
+    this->setPropertiesComponent(resistor_properties_component);
 }

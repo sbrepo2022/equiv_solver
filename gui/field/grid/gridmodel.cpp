@@ -49,6 +49,8 @@ void GridGraphicsItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
         this->last_hover_cell = cur_hover_cell;
     }
     QGraphicsItem::hoverMoveEvent(event);
+
+    emit hoverMoved(this, event);
 }
 
 void GridGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -56,6 +58,8 @@ void GridGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     this->last_hover_cell = QPoint(-1, -1);
     emit onItemEnter();
     QGraphicsItem::hoverEnterEvent(event);
+
+    emit hoverEntered(this);
 }
 
 void GridGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
@@ -63,6 +67,8 @@ void GridGraphicsItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     this->last_hover_cell = QPoint(-1, -1);
     emit onItemLeave();
     QGraphicsItem::hoverLeaveEvent(event);
+
+    emit hoverLeaved(this);
 }
 
 void GridGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
@@ -70,7 +76,18 @@ void GridGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QPoint cur_pressed_cell = getCellByMousePos(pos);
     emit onCellPressed(cur_pressed_cell);
 
+    // Получаем список всех элементов под курсором мыши
+    QList<QGraphicsItem*> items_under_cursor = this->scene()->items(event->scenePos(), Qt::IntersectsItemShape, Qt::DescendingOrder, this->transform());
+
+    // Если есть элемент поверх текущего элемента, игнорируем событие нажатия мыши
+    if (items_under_cursor.size() > 1 && items_under_cursor.first() != this) {
+        event->ignore();
+        return;
+    }
+
     QGraphicsItem::mousePressEvent(event);
+
+    emit mousePressed(this, event);
 }
 
 void GridGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

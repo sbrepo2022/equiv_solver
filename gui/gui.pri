@@ -1,4 +1,5 @@
 SOURCES += \
+    $$PWD/dock_widgets_controllers/selectablemodelview.cpp \
     $$PWD/field/fieldfactory.cpp \
     $$PWD/field/fieldmodel.cpp \
     $$PWD/field/wire/wiremodel.cpp \
@@ -18,9 +19,33 @@ SOURCES += \
     $$PWD/field/circuit/standart_circuit_elements/capacitorelementmodel.cpp \
     $$PWD/field/circuit/standart_circuit_elements/inductorelementmodel.cpp \
     $$PWD/field/circuit/standart_circuit_elements/groundelementmodel.cpp \
-    $$PWD/field/fieldelementmodel.cpp
+    $$PWD/field/fieldelementmodel.cpp \
+    $$PWD/libs/formgenerator.cpp \
+    $$PWD/model_components/basiccomponent.cpp \
+    $$PWD/model_components/properties_components/capacitorpropertiescomponent.cpp \
+    $$PWD/model_components/properties_components/currencysourcepropertiescomponent.cpp \
+    $$PWD/model_components/properties_components/fieldelementpropertiescomponent.cpp \
+    $$PWD/model_components/properties_components/inductorpropertiescomponent.cpp \
+    $$PWD/model_components/properties_components/propertiescomponent.cpp \
+    $$PWD/model_components/properties_components/resistorpropertiescomponent.cpp \
+    $$PWD/model_components/properties_components/voltagesourcepropertiescomponent.cpp \
+    $$PWD/model_components/selectablemodelcomponentskeeper.cpp \
+    $$PWD/model_components/widgetcomponent.cpp \
+    $$PWD/solver_connection/analog_solver_connection/analogsolvercontroller.cpp \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverconnector.cpp \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverpropertiescomponent.cpp \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverresult.cpp \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverrunner.cpp \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverserializer.cpp \
+    $$PWD/solver_connection/solverconnector.cpp \
+    $$PWD/solver_connection/solvercontroller.cpp \
+    $$PWD/solver_connection/solverpropertiescomponent.cpp \
+    $$PWD/solver_connection/solverresult.cpp \
+    $$PWD/solver_connection/solverrunner.cpp \
+    $$PWD/solver_connection/solverserializer.cpp
 
 HEADERS += \
+    $$PWD/dock_widgets_controllers/selectablemodelview.h \
     $$PWD/field/fieldfactory.h \
     $$PWD/field/fieldmodel.h \
     $$PWD/field/wire/wiremodel.h \
@@ -42,5 +67,28 @@ HEADERS += \
     $$PWD/field/circuit/standart_circuit_elements/inductorelementmodel.h \
     $$PWD/field/circuit/standart_circuit_elements/groundelementmodel.h \
     $$PWD/field/fieldelementmodel.h \
-    $$PWD/libs/objectcounter.h
+    $$PWD/libs/objectcounter.h \
+    $$PWD/libs/formgenerator.h \
+    $$PWD/model_components/basiccomponent.h \
+    $$PWD/model_components/properties_components/capacitorpropertiescomponent.h \
+    $$PWD/model_components/properties_components/currencysourcepropertiescomponent.h \
+    $$PWD/model_components/properties_components/fieldelementpropertiescomponent.h \
+    $$PWD/model_components/properties_components/inductorpropertiescomponent.h \
+    $$PWD/model_components/properties_components/propertiescomponent.h \
+    $$PWD/model_components/properties_components/resistorpropertiescomponent.h \
+    $$PWD/model_components/properties_components/voltagesourcepropertiescomponent.h \
+    $$PWD/model_components/selectablemodelcomponentskeeper.h \
+    $$PWD/model_components/widgetcomponent.h \
+    $$PWD/solver_connection/analog_solver_connection/analogsolvercontroller.h \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverconnector.h \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverpropertiescomponent.h \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverresult.h \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverrunner.h \
+    $$PWD/solver_connection/analog_solver_connection/simple_dynamics_solver/simpledynamicssolverserializer.h \
+    $$PWD/solver_connection/solverconnector.h \
+    $$PWD/solver_connection/solvercontroller.h \
+    $$PWD/solver_connection/solverpropertiescomponent.h \
+    $$PWD/solver_connection/solverresult.h \
+    $$PWD/solver_connection/solverrunner.h \
+    $$PWD/solver_connection/solverserializer.h
 

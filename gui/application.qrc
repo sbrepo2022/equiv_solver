@@ -36,6 +36,8 @@
         <file>resources/ui_icons/zoom.svg</file>
         <file>resources/ui_icons/zoom_minimize.svg</file>
         <file>resources/ui_icons/forbidden.svg</file>
+        <file>resources/ui_icons/close_black.svg</file>
+        <file>resources/ui_icons/zoom_black.svg</file>
     </qresource>
     <qresource prefix="/fonts">
         <file>resources/font/Segoe-UI-Variable-Static-Display.ttf</file>

@@ -11,9 +11,11 @@ protected:
     int id;
 
 public:
-    ObjectCounter() {
+    static void increaseId() { ObjectCounter<T>::objects_count++; }
+
+    ObjectCounter(bool increase_id = true) {
         this->id = ObjectCounter<T>::objects_count;
-        ObjectCounter<T>::objects_count++;
+        if (increase_id) ObjectCounter<T>::objects_count++;
     }
 
     int getId() {return this->id;}

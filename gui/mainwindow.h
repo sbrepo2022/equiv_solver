@@ -16,6 +16,7 @@
 #include "field/fieldfactory.h"
 #include "custom_widgets/windowmanagebuttons.h"
 #include "custom_widgets/windowframemenubar.h"
+#include "dock_widgets_controllers/selectablemodelview.h"
 
 namespace Ui {
 class MainWindow;
@@ -37,9 +38,11 @@ private:
     QTabBar *field_models_tabs;
 
     FieldController *field_controller;
+    SelectableModelView *selectable_model_controller;
 
     void setupWindowFrame();
     void setupAdditionalUi();
+    void setupSelectableModelView();
 
 public slots:
     void onModelsTabIndexChanged(int tab_index);

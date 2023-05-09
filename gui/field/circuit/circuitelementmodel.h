@@ -12,6 +12,7 @@
 #include <QDebug>
 
 #include "../fieldelementmodel.h"
+#include "../../model_components/selectablemodelcomponentskeeper.h"
 #include "../../libs/qpoint_hash.h"
 
 class InputPointData {
@@ -110,6 +111,7 @@ private:
     QImage draw_px;
     QColor color;
     QColor hover_color;
+    QColor selection_color;
     QColor disable_color;
     QPoint center;
 
@@ -129,11 +131,13 @@ public slots:
     void setImage(const QImage &image);
     void setColor(const QColor &color);
     void setHoverColor(const QColor &hovered_color);
+    void setSelectionColor(const QColor &selection_color);
+    void setDisableColor(const QColor &disable_color);
     void setVisibility(bool visible);
 };
 
 
-class CircuitElementModel : public FieldElementModel
+class CircuitElementModel : public FieldElementModel, public SelectableModelComponentsKeeper
 {
     Q_OBJECT
 

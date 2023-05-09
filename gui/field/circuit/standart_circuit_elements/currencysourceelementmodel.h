@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "../circuitelementmodel.h"
+#include "../../../model_components/properties_components/currencysourcepropertiescomponent.h"
 
 class CurrencySourceElementModel : public CircuitElementModel
 {

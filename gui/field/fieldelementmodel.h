@@ -50,6 +50,7 @@ protected:
     QSizeF cell_size;
 
     bool mark_hovered;
+    bool mark_selected;
     bool mark_collided;
 
     QSvgRenderer forbidden_renderer;
@@ -64,10 +65,29 @@ public slots:
     virtual void attachFieldElementModel() = 0;
     virtual void detachFieldElementModel() = 0;
     virtual void setCellSize(const QSizeF &cell_size);
-    virtual void paramsUpdated() {this->update();}
-    void setMarkHovered(bool mark_hovered) {this->mark_hovered = mark_hovered; this->paramsUpdated();}
-    void setMarkCollided(bool mark_collided) {this->mark_collided = mark_collided; this->paramsUpdated();}
 
+    virtual void paramsUpdated() {
+        this->update();
+    }
+
+    virtual void setCenter(const QPoint &center) {
+        this->setPos(QPoint(center.x() * cell_size.width(), center.y() * cell_size.height()));
+    }
+
+    void setMarkHovered(bool mark_hovered) {
+        this->mark_hovered = mark_hovered;
+        this->paramsUpdated();
+    }
+
+    void setMarkSelected(bool mark_selected) {
+        this->mark_selected = mark_selected;
+        this->paramsUpdated();
+    }
+
+    void setMarkCollided(bool mark_collided) {
+        this->mark_collided = mark_collided;
+        this->paramsUpdated();
+    }
 
 // -- DEBUG --
 protected:

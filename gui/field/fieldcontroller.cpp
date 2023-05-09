@@ -71,9 +71,15 @@ FieldModel* FieldController::getCurrentFieldModel()
 }
 
 void FieldController::registerEditModes() {
-    this->avail_edit_modes.insert(FieldEditMode::SELECT, new FieldSelectModeController(this));
+    FieldSelectModeController *field_select_edit_mode = new FieldSelectModeController(this);
+    connect(field_select_edit_mode, &FieldSelectModeController::selectableModelSelected,
+            this, &FieldController::selectableModelSelected);
+    this->avail_edit_modes.insert(FieldEditMode::SELECT, field_select_edit_mode);
+
     this->avail_edit_modes.insert(FieldEditMode::WIRE, new FieldWireModeController(this));
+
     this->avail_edit_modes.insert(FieldEditMode::DELETE, new FieldDeleteModeController(this));
+
     this->avail_edit_modes.insert(FieldEditMode::DRAW_ELEMENT, new FieldDrawElementModeController(this));
 
     this->setSelectMode();

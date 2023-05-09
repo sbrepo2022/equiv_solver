@@ -21,6 +21,9 @@ InductorElementModel::InductorElementModel(QObject *parent)
         )
     );
     this->setInputsPoints(inputs_points);
-
     this->getGraphicsItem<CircuitElementGraphicsItem>()->setImage(QImage(":/circuit_icons/resources/inductor.png"));
+
+    // init selectable model components keeper
+    InductorPropertiesComponent *inductor_properties_component = new InductorPropertiesComponent();
+    this->setPropertiesComponent(inductor_properties_component);
 }

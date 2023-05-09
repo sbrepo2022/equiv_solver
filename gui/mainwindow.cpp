@@ -69,6 +69,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionFieldSettings, &QAction::triggered, this->field_controller, &FieldController::showFieldSettingsDialog);
     connect(ui->actionCircuitSettings, &QAction::triggered, this->field_controller, &FieldController::showCircuitSettingsDialog);
 
+    this->setupSelectableModelView();
+
     this->connectDebug();
 }
 
@@ -129,6 +131,13 @@ void MainWindow::setupAdditionalUi()
     logo_widget->setPixmap(QPixmap(":/logo/resources/logo/logo_32.png"));
     logo_widget->setScaledContents(true);
     this->ui->menuBar->setCornerWidget(logo_widget, Qt::TopLeftCorner);
+}
+
+void MainWindow::setupSelectableModelView()
+{
+    this->selectable_model_controller = new SelectableModelView(this->ui->dockWidgetPropertiesContents);
+    connect(this->field_controller, &FieldController::selectableModelSelected,
+            this->selectable_model_controller, &SelectableModelView::onSelectableModelSelected);
 }
 
 void MainWindow::onModelsTabIndexChanged(int tab_index)

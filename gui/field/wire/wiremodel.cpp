@@ -190,7 +190,7 @@ QPainterPath WireGraphicsItem::calcPathForLine(QLineF line_f) const
 void WireGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPen pen_lines(this->mark_collided ? this->disable_color : this->line_color, this->line_width, Qt::SolidLine, Qt::SquareCap);
-    QPen pen_lines_hovered(this->mark_hovered ? this->line_hover_color : this->line_color, this->line_width, Qt::SolidLine, Qt::SquareCap);
+    QPen pen_lines_hovered(this->mark_hovered || this->mark_selected ? this->line_hover_color : this->line_color, this->line_width, Qt::SolidLine, Qt::SquareCap);
 
     int hovered_line_index = this->getLineIndexByCoordinate(cursor_pos_cache);
     QList<QLineF> lines_list_f = this->getTransformedLines();

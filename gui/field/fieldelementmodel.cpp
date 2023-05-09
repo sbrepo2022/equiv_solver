@@ -27,6 +27,7 @@ void FieldGraphicsItem::init()
 
     this->cell_size = QSizeF(32, 32);
     this->mark_hovered = false;
+    this->mark_selected = false;
     this->mark_collided = false;
 
     this->debug = false;

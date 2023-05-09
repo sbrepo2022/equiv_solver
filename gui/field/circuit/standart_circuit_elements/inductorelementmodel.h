@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "../circuitelementmodel.h"
+#include "../../../model_components/properties_components/inductorpropertiescomponent.h"
 
 class InductorElementModel : public CircuitElementModel
 {
