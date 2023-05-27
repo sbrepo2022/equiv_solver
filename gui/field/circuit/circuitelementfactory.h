@@ -1,13 +1,13 @@
 #ifndef CIRCUITELEMENTFACTORY_H
 #define CIRCUITELEMENTFACTORY_H
 
-#include "circuitelementmodel.h"
-#include "standart_circuit_elements/currencysourceelementmodel.h"
-#include "standart_circuit_elements/voltagesourceelementmodel.h"
-#include "standart_circuit_elements/resistorelementmodel.h"
-#include "standart_circuit_elements/capacitorelementmodel.h"
-#include "standart_circuit_elements/inductorelementmodel.h"
-#include "standart_circuit_elements/groundelementmodel.h"
+#include "field/circuit/circuitelementmodel.h"
+#include "field/circuit/standart_circuit_elements/currencysourceelementmodel.h"
+#include "field/circuit/standart_circuit_elements/voltagesourceelementmodel.h"
+#include "field/circuit/standart_circuit_elements/resistorelementmodel.h"
+#include "field/circuit/standart_circuit_elements/capacitorelementmodel.h"
+#include "field/circuit/standart_circuit_elements/inductorelementmodel.h"
+#include "field/circuit/standart_circuit_elements/groundelementmodel.h"
 
 enum BasicElementType {
     I,

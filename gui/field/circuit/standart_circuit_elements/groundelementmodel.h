@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "../circuitelementmodel.h"
+#include "field/circuit/circuitelementmodel.h"
 
 class GroundElementModel : public CircuitElementModel
 {
@@ -11,6 +11,10 @@ class GroundElementModel : public CircuitElementModel
 
 public:
     explicit GroundElementModel(QObject *parent = nullptr);
+
+    virtual GroundElementModel* copy() {
+        return (new GroundElementModel(*this));
+    }
 };
 
 #endif // GROUNDELEMENTMODEL_H

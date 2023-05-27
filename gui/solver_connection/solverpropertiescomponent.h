@@ -1,7 +1,7 @@
 #ifndef SOLVERPROPERTIESCOMPONENT_H
 #define SOLVERPROPERTIESCOMPONENT_H
 
-#include "../model_components/properties_components/propertiescomponent.h"
+#include "model_components/properties_components/propertiescomponent.h"
 
 class SolverPropertiesComponent : public PropertiesComponent
 {
@@ -16,7 +16,7 @@ public:
     SolverPropertiesComponent(const SolverPropertiesComponent &obj);
 
 signals:
-    void solverNameChanged(double);
+    void solverNameChanged(const QString &);
 };
 
 #endif // SOLVERPROPERTIESCOMPONENT_H

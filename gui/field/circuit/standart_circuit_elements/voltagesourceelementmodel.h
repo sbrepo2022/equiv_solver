@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "../circuitelementmodel.h"
-#include "../../../model_components/properties_components/voltagesourcepropertiescomponent.h"
+#include "field/circuit/circuitelementmodel.h"
+#include "model_components/properties_components/voltagesourcepropertiescomponent.h"
 
 class VoltageSourceElementModel : public CircuitElementModel
 {
@@ -12,6 +12,10 @@ class VoltageSourceElementModel : public CircuitElementModel
 
 public:
     explicit VoltageSourceElementModel(QObject *parent = nullptr);
+
+    virtual VoltageSourceElementModel* copy() {
+        return (new VoltageSourceElementModel(*this));
+    }
 };
 
 #endif // VOLTAGESOURCEELEMENTMODEL_H

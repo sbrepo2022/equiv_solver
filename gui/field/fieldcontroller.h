@@ -5,17 +5,20 @@
 #include <QMap>
 #include <QDebug>
 
-#include "fieldview.h"
-#include "fieldmodel.h"
-#include "circuit/circuitelementmodel.h"
-#include "circuit/circuitelementfactory.h"
-#include "wire/wiremodel.h"
+#include "field/fieldview.h"
+#include "field/fieldmodel.h"
+#include "field/circuit/circuitelementmodel.h"
+#include "field/circuit/circuitelementfactory.h"
+#include "field/wire/wiremodel.h"
 
-#include "edit_modes/fieldeditmodecontroller.h"
-#include "edit_modes/fieldselectmodecontroller.h"
-#include "edit_modes/fieldwiremodecontroller.h"
-#include "edit_modes/fielddeletemodecontroller.h"
-#include "edit_modes/fielddrawelementmodecontroller.h"
+#include "field/edit_modes/fieldeditmodecontroller.h"
+#include "field/edit_modes/fieldselectmodecontroller.h"
+#include "field/edit_modes/fieldwiremodecontroller.h"
+#include "field/edit_modes/fielddeletemodecontroller.h"
+#include "field/edit_modes/fielddrawelementmodecontroller.h"
+
+#include "solver_connection/analog_solver_connection/analogsolvercontroller.h"
+#include "solver_connection/solverprovider.h"
 
 enum class FieldEditMode {
     SELECT,
@@ -24,12 +27,18 @@ enum class FieldEditMode {
     DRAW_ELEMENT,
 };
 
-class FieldController : public QObject
+class FieldController : public QObject, public SolverProvider
 {
     Q_OBJECT
 
 public:
     explicit FieldController(FieldView *field_view, QObject *parent = nullptr);
+    ~FieldController();
+
+    // solver provider method
+    SolverController* getSolverController() {
+        return this->analog_solver_controller;
+    }
 
     // operations with field models
     int addFieldModel(FieldModel *field_model); // returning local index
@@ -57,6 +66,7 @@ public:
 
 private:
     FieldView *field_view;
+    AnalogSolverController *analog_solver_controller;
     FieldEditMode edit_mode = FieldEditMode::SELECT;
 
     // field model

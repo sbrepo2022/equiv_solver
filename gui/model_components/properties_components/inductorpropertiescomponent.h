@@ -1,8 +1,8 @@
 #ifndef INDUCTORPROPERTIESCOMPONENT_H
 #define INDUCTORPROPERTIESCOMPONENT_H
 
-#include "fieldelementpropertiescomponent.h"
-#include "../../libs/objectcounter.h"
+#include "model_components/properties_components/fieldelementpropertiescomponent.h"
+#include "libs/objectcounter.h"
 
 class InductorPropertiesComponent : public FieldElementPropertiesComponent, public ObjectCounter<InductorPropertiesComponent>
 {

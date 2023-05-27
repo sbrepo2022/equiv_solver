@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "fieldeditmodecontroller.h"
-#include "../../model_components/selectablemodelcomponentskeeper.h"
+#include "field/edit_modes/fieldeditmodecontroller.h"
+#include "model_components/selectablemodelcomponentskeeper.h"
 
 class FieldSelectModeController : public FieldEditModeController
 {

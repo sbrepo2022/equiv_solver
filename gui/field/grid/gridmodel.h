@@ -8,8 +8,8 @@
 #include <QDebug>
 #include <QGraphicsSceneHoverEvent>
 
-#include "../fieldelementmodel.h"
-#include "../../libs/objectcounter.h"
+#include "field/fieldelementmodel.h"
+#include "libs/objectcounter.h"
 
 class GridModel;
 
@@ -66,6 +66,10 @@ public:
     explicit GridModel(QObject *parent = nullptr);
     GridModel(const GridModel &obj);
     ~GridModel();
+
+    virtual GridModel* copy() {
+        return (new GridModel(*this));
+    }
 
     QSize getGridSize() {return this->grid_size;}
 

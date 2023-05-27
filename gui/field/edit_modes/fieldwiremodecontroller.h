@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "fieldeditmodecontroller.h"
-#include "../wire/wiremodel.h"
+#include "field/edit_modes/fieldeditmodecontroller.h"
+#include "field/wire/wiremodel.h"
 
 class FieldWireModeController : public FieldEditModeController
 {

@@ -1,8 +1,8 @@
 #ifndef SELECTABLEMODELCOMPONENTSKEEPER_H
 #define SELECTABLEMODELCOMPONENTSKEEPER_H
 
-#include "properties_components/propertiescomponent.h"
-#include "properties_components/fieldelementpropertiescomponent.h"
+#include "model_components/properties_components/propertiescomponent.h"
+#include "model_components/properties_components/fieldelementpropertiescomponent.h"
 
 class SelectableModelComponentsKeeper
 {

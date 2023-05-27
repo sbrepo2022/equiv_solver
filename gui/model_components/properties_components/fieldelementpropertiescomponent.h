@@ -1,7 +1,7 @@
 #ifndef FIELDELEMENTPROPERTIESCOMPONENT_H
 #define FIELDELEMENTPROPERTIESCOMPONENT_H
 
-#include "propertiescomponent.h"
+#include "model_components/properties_components/propertiescomponent.h"
 
 class FieldElementPropertiesComponent : public PropertiesComponent
 {

@@ -1,8 +1,8 @@
 #ifndef CAPACITORPROPERTIESCOMPONENT_H
 #define CAPACITORPROPERTIESCOMPONENT_H
 
-#include "fieldelementpropertiescomponent.h"
-#include "../../libs/objectcounter.h"
+#include "model_components/properties_components/fieldelementpropertiescomponent.h"
+#include "libs/objectcounter.h"
 
 class CapacitorPropertiesComponent : public FieldElementPropertiesComponent, public ObjectCounter<CapacitorPropertiesComponent>
 {

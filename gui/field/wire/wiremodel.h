@@ -8,9 +8,9 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QDebug>
 
-#include "../fieldelementmodel.h"
-#include "../../libs/qpoint_hash.h"
-#include "../../libs/objectcounter.h"
+#include "field/fieldelementmodel.h"
+#include "libs/qpoint_hash.h"
+#include "libs/objectcounter.h"
 
 class WireModel;
 
@@ -74,6 +74,10 @@ public:
     explicit WireModel(QObject *parent = nullptr);
     WireModel(const WireModel &obj);
     ~WireModel();
+
+    virtual WireModel* copy() {
+        return (new WireModel(*this));
+    }
 
     QRect getCellsRect() {return this->cells_rect;}
     QList<QLine> getLinesList() {return this->lines_list;}

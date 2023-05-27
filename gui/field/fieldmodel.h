@@ -5,10 +5,10 @@
 #include <QMap>
 #include <QGraphicsScene>
 
-#include "fieldscene.h"
-#include "grid/gridmodel.h"
-#include "circuit/circuitelementmodel.h"
-#include "wire/wiremodel.h"
+#include "field/fieldscene.h"
+#include "field/grid/gridmodel.h"
+#include "field/circuit/circuitelementmodel.h"
+#include "field/wire/wiremodel.h"
 
 class FieldModel : public QObject
 {
@@ -23,6 +23,8 @@ public:
     QSize getGridSize() {return this->grid_model->getGridSize();}
 
     GridGraphicsItem* getGridGraphicsItem() {return this->grid_model->getGraphicsItem<GridGraphicsItem>();}
+    QMap<int, CircuitElementModel*> getCircuitElements() { return this->circuit_elements; }
+    QMap<int, WireModel*> getWires() { return this->wires; }
 
     void addFieldGraphicsItem(FieldGraphicsItem *field_graphics_item, qreal z_index);
     void removeFieldGraphicsItem(FieldGraphicsItem *field_graphics_item);

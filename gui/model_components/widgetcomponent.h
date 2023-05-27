@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "basiccomponent.h"
+#include "model_components/basiccomponent.h"
 
 class WidgetComponent : public BasicComponent
 {

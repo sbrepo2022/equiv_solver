@@ -115,7 +115,7 @@ void FieldDrawElementModeController::gridCellPressed(const QPoint &pos)
         this->buffer_graphics_item->setVisibility(true);
     }
 
-    CircuitElementModel *circuit_element = new CircuitElementModel(*(this->buffer_element));
+    CircuitElementModel *circuit_element = this->buffer_element->copy();
     FieldModel *field_model = this->getCurrentFieldModel();
     if (field_model != nullptr) field_model->addCircuitElement(circuit_element);
 }

@@ -7,8 +7,8 @@
 #include <QGraphicsItemGroup>
 #include <QHash>
 
-#include "grid/gridmodel.h"
-#include "fieldelementmodel.h"
+#include "field/grid/gridmodel.h"
+#include "field/fieldelementmodel.h"
 
 
 class FieldView : public QGraphicsView

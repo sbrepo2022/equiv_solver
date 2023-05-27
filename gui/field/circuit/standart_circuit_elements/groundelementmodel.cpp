@@ -3,11 +3,14 @@
 GroundElementModel::GroundElementModel(QObject *parent)
     : CircuitElementModel(parent)
 {
+    this->setMeta(CircuitElementModelMeta("Ground"));
+
     this->setCellsRect(QRect(-2, -2, 4, 4));
 
     QHash<QPoint, InputPointData> inputs_points;
     inputs_points.insert(QPoint(0, -2),
         InputPointData(
+            0,
             QPoint(0, -2),
             QPoint(0, -1),
             "Gnd"

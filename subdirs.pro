@@ -1,7 +1,10 @@
 TEMPLATE = subdirs
 
 SUBDIRS = \
+    file_storage \
     gui \
-    tests
+    solvers
+    \    #tests
 
-tests.depends = gui
+gui.depends = file_storage solvers
+#tests.depends = gui

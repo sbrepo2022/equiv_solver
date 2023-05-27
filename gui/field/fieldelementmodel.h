@@ -7,7 +7,7 @@
 #include <QSvgRenderer>
 #include <QDebug>
 
-#include "../libs/objectcounter.h"
+#include "libs/objectcounter.h"
 
 
 enum class FieldGraphicsItemType
@@ -119,6 +119,10 @@ public:
     explicit FieldElementModel(QObject *parent = nullptr);
     FieldElementModel(const FieldElementModel &obj);
     virtual ~FieldElementModel();
+
+    virtual FieldElementModel* copy() {
+        return (new FieldElementModel(*this));
+    }
 
     template<class GraphicsItemClass>
     GraphicsItemClass* getGraphicsItem() const {

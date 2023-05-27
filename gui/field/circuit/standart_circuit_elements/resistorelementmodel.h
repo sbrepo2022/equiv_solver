@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "../circuitelementmodel.h"
-#include "../../../model_components/properties_components/resistorpropertiescomponent.h"
+#include "field/circuit/circuitelementmodel.h"
+#include "model_components/properties_components/resistorpropertiescomponent.h"
 
 class ResistorElementModel : public CircuitElementModel
 {
@@ -12,6 +12,10 @@ class ResistorElementModel : public CircuitElementModel
 
 public:
     explicit ResistorElementModel(QObject *parent = nullptr);
+
+    virtual ResistorElementModel* copy() {
+        return (new ResistorElementModel(*this));
+    }
 };
 
 #endif // RESISTORELEMENTMODEL_H

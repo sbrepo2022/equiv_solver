@@ -2,7 +2,8 @@
 #define SOLVERRESULT_H
 
 #include <QObject>
-#include "solverpropertiescomponent.h"
+#include <QtCharts/QLineSeries>
+#include "solver_connection/solverpropertiescomponent.h"
 
 
 class SolverResult : public QObject
@@ -12,16 +13,14 @@ class SolverResult : public QObject
 public:
     explicit SolverResult(QObject *parent = nullptr);
 
-    void setSolverPropertiesComponent(SolverPropertiesComponent *solver_properties_component) {
-        this->solver_properties_component = solver_properties_component;
-    }
+    virtual void loadResult() = 0;
+    virtual QList<QLineSeries*> getLineSeries() const = 0;
 
-    SolverPropertiesComponent* getSolverPropertiesComponent() {
-        return this->solver_properties_component;
-    }
+    bool doneOk() const { return this->done_ok; }
+    void setDoneOk(bool done_ok) { this->done_ok = done_ok; }
 
-protected:
-    SolverPropertiesComponent *solver_properties_component;
+private:
+    bool done_ok;
 };
 
 #endif // SOLVERRESULT_H

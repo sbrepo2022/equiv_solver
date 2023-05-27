@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "fieldmodel.h"
+#include "field/fieldmodel.h"
 
 class FieldFactory : public QObject
 {

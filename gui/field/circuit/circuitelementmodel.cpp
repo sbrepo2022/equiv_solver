@@ -87,7 +87,7 @@ QPainterPath CircuitElementGraphicsItem::shape() const
 
     if (this->getModel<CircuitElementModel>() != nullptr) {
         int angle = this->getModel<CircuitElementModel>()->getAngle();
-        QHash<QPoint, InputPointData> inputs_points = this->getModel<CircuitElementModel>()->getInputsPoints();
+        QHash<QPoint, InputPointData> inputs_points = this->getModel<CircuitElementModel>()->getInputPoints();
         for (InputPointData input_point_data : inputs_points.values()) {
             InputPointData input_point_data_rotated = input_point_data.withAngle(angle);
 
@@ -160,7 +160,7 @@ void CircuitElementGraphicsItem::paint(QPainter *painter, const QStyleOptionGrap
 
         if (this->getModel<CircuitElementModel>() != nullptr) {
             int angle = this->getModel<CircuitElementModel>()->getAngle();
-            QHash<QPoint, InputPointData> inputs_points = this->getModel<CircuitElementModel>()->getInputsPoints();
+            QHash<QPoint, InputPointData> inputs_points = this->getModel<CircuitElementModel>()->getInputPoints();
             for (InputPointData input_point_data : inputs_points.values()) {
                 InputPointData input_point_data_rotated = input_point_data.withAngle(angle);
 
@@ -265,7 +265,6 @@ CircuitElementModel::CircuitElementModel(QObject *parent)
     : FieldElementModel(parent),
       SelectableModelComponentsKeeper()
 {
-
     this->angle = 0;
     this->cells_rect = QRect(0, 0, 1, 1);
 
@@ -276,7 +275,7 @@ CircuitElementModel::CircuitElementModel(const CircuitElementModel &obj)
     : FieldElementModel(obj),
       SelectableModelComponentsKeeper(obj)
 {
-
+    this->meta = obj.meta;
     this->angle = obj.angle;
     this->cells_rect = obj.cells_rect;
     this->inputs_points = obj.inputs_points;

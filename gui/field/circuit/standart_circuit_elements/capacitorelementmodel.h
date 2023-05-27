@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "../circuitelementmodel.h"
-#include "../../../model_components/properties_components/capacitorpropertiescomponent.h"
+#include "field/circuit/circuitelementmodel.h"
+#include "model_components/properties_components/capacitorpropertiescomponent.h"
 
 class CapacitorElementModel : public CircuitElementModel
 {
@@ -12,6 +12,10 @@ class CapacitorElementModel : public CircuitElementModel
 
 public:
     explicit CapacitorElementModel(QObject *parent = nullptr);
+
+    virtual CapacitorElementModel* copy() {
+        return (new CapacitorElementModel(*this));
+    }
 };
 
 #endif // CAPACITORELEMENTMODEL_H

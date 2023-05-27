@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "field/fieldview.h"
+#include "solverssettingsdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,6 +16,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     this->field_controller = new FieldController(ui->circuitGraphicsView, this);
+    this->solvers_providers.append(this->field_controller);
+    this->current_solver_provider = this->field_controller;
+
+    connect(this->current_solver_provider->getSolverController(), &SolverController::solved, this, &MainWindow::openDialogWithChart);
+
+    connect(this->current_solver_provider->getSolverController(), &SolverController::errorOccured, this, [=](const QString &error_message) {
+        QMessageBox::critical(this, "Solving error occured!", error_message);
+    });
+
     connect(ui->actionNew, &QAction::triggered, this, [=]() {
         int model_index = field_controller->addFieldModel(FieldFactory::createNew());
         QString text = QString("New %1").arg(model_index);
@@ -66,8 +76,18 @@ MainWindow::MainWindow(QWidget *parent) :
        field_controller->delegateActionTriggerToEditMode("RotateElementLeft");
     });
 
+    connect(ui->actionSolve, &QAction::triggered, this, [=]() {
+        if (this->current_solver_provider != nullptr) {
+            SolverController *solver_controller = this->current_solver_provider->getSolverController();
+            if (solver_controller != nullptr) {
+                solver_controller->solve();
+            }
+        }
+    });
+
     connect(ui->actionFieldSettings, &QAction::triggered, this->field_controller, &FieldController::showFieldSettingsDialog);
     connect(ui->actionCircuitSettings, &QAction::triggered, this->field_controller, &FieldController::showCircuitSettingsDialog);
+    connect(ui->actionSolverSettings, &QAction::triggered, this, &MainWindow::showSolverSettingsDialog);
 
     this->setupSelectableModelView();
 
@@ -151,6 +171,62 @@ void MainWindow::onModelsTabRemove(int tab_index)
     int model_index = this->field_models_tabs->tabData(tab_index).toInt();
     this->field_controller->removeFieldModel(model_index);
     this->field_models_tabs->removeTab(tab_index);
+}
+
+void MainWindow::showSolverSettingsDialog()
+{
+    SolversSettingsDialog dialog(this->solvers_providers, this->current_solver_provider);
+    switch (dialog.exec()) {
+    case QDialog::Accepted:
+        break;
+
+    case QDialog::Rejected:
+        break;
+    }
+}
+
+void MainWindow::openDialogWithChart(const SolverResult &result)
+{
+    if (result.doneOk()) {
+        QDialog *dialog = new QDialog();
+        dialog->resize(800, 600);
+
+        QVBoxLayout *layout = new QVBoxLayout();
+        dialog->setLayout(layout);
+
+        QChart *chart = new QChart();
+        QChartView *chartView = new QChartView(chart);
+        layout->addWidget(chartView);
+
+        QList<QLineSeries*> series_list = result.getLineSeries();
+        for (auto series : series_list) {
+            chart->addSeries(series);
+        }
+
+        for (int i = 0; i < series_list.size(); i++) {
+            QPen pen = series_list[i]->pen();
+            pen.setWidth(3);
+            series_list[i]->setPen(pen);
+        }
+
+        chart->createDefaultAxes();
+
+        QValueAxis *axisX = qobject_cast<QValueAxis*>(chart->axisX());
+        QValueAxis *axisY = qobject_cast<QValueAxis*>(chart->axisY());
+
+        double padding = 0.01;  // Добавить 1% от диапазона оси
+
+        double minX = axisX->min() - padding * (axisX->max() - axisX->min());
+        double maxX = axisX->max() + padding * (axisX->max() - axisX->min());
+
+        double minY = axisY->min() - padding * (axisY->max() - axisY->min());
+        double maxY = axisY->max() + padding * (axisY->max() - axisY->min());
+
+        axisX->setRange(minX, maxX);
+        axisY->setRange(minY, maxY);
+
+        dialog->exec();
+    }
 }
 
 

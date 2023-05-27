@@ -3,6 +3,19 @@
 
 #include <QObject>
 #include <QFile>
+#include <exception>
+
+class SerializationException : std::exception {
+public:
+    SerializationException(const char* message) : m_message(message) {}
+
+    const char* what() const noexcept override {
+        return m_message;
+    }
+
+private:
+    const char* m_message;
+};
 
 class SolverSerializer : public QObject
 {
@@ -14,18 +27,9 @@ public:
     virtual QString getFileToSave() = 0;
 
 public slots:
-    QString serialize() {
-        QString filename = this->getFileToSave();
-        QFile file_to_save = QFile(filename);
-        if (!file_to_save.open(QIODevice::WriteOnly | QIODevice::Text))
-            return "";
+    QString serialize();
 
-        this->processSerialization(file_to_save);
-
-        return filename;
-    }
-
-    virtual void processSerialization(const QFile &file_to_save) = 0;
+    virtual void processSerialization(QIODevice *out) = 0;
 };
 
 #endif // SOLVERSERIALIZER_H

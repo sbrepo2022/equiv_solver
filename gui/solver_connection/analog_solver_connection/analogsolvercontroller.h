@@ -1,7 +1,9 @@
 #ifndef ANALOGSOLVERCONTROLLER_H
 #define ANALOGSOLVERCONTROLLER_H
 
-#include "../solvercontroller.h"
+#include "field/fieldmodel.h"
+#include "solver_connection/solvercontroller.h"
+#include "solver_connection/analog_solver_connection/simple_dynamics_solver/transient_analysis/transientanalysissolverconnector.h"
 
 class AnalogSolverController : public SolverController
 {
@@ -10,11 +12,10 @@ class AnalogSolverController : public SolverController
 public:
     explicit AnalogSolverController(QObject *parent = nullptr);
 
+    void setCurrentFieldModel(FieldModel *field_model);
+
 protected:
     virtual void registerSolvers();
-
-public slots:
-    virtual void solve();
 };
 
 #endif // ANALOGSOLVERCONTROLLER_H

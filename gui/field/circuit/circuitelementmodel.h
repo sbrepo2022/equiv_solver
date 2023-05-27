@@ -11,12 +11,23 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QDebug>
 
-#include "../fieldelementmodel.h"
-#include "../../model_components/selectablemodelcomponentskeeper.h"
-#include "../../libs/qpoint_hash.h"
+#include "field/fieldelementmodel.h"
+#include "model_components/selectablemodelcomponentskeeper.h"
+#include "libs/qpoint_hash.h"
+
+class CircuitElementModel;
+
+class CircuitElementModelMeta {
+public:
+    CircuitElementModelMeta(QString element_type = "None")
+        : element_type(element_type) {}
+
+    QString element_type;
+};
 
 class InputPointData {
 private:
+    int index;
     QPoint point;
     QPointF normalized_vector;
     QString name;
@@ -29,12 +40,12 @@ private:
         return transform;
     }
 
-    static QPointF normalizeVector(QPointF vector) {
+    static QPointF normalizeVector(QPointF vector) { // Дописать реализацию нормолизации!
         return vector;
     }
 
 public:
-    InputPointData(QPoint point, QPoint vector, QString name) : point(point), normalized_vector(QPointF()), name(name), angle_value(0) {
+    InputPointData(int index, QPoint point, QPoint vector, QString name) : index(index), point(point), normalized_vector(QPointF()), name(name), angle_value(0) {
         this->normalized_vector = InputPointData::normalizeVector(vector);
     }
 
@@ -42,6 +53,10 @@ public:
         InputPointData obj_copy = InputPointData(*this);
         obj_copy.angle_value = angle_value;
         return obj_copy;
+    }
+
+    int getIndex() {
+        return this->index;
     }
 
     QPoint getPoint() {
@@ -81,6 +96,10 @@ public:
         rect = rect.normalized();
 
         return rect;
+    }
+
+    QPoint getFieldPosition(int angle, QPoint center) {
+        return this->withAngle(angle).getPoint() + center;
     }
 };
 
@@ -146,12 +165,18 @@ public:
     CircuitElementModel(const CircuitElementModel &obj);
     ~CircuitElementModel();
 
-    int getAngle() {return this->angle;}
-    QRect getCellsRect() {return this->cells_rect;}
-    QHash<QPoint, InputPointData> getInputsPoints() { return this->inputs_points; }
-    QPoint getCenter() {return this->center;}
+    virtual CircuitElementModel* copy() {
+        return (new CircuitElementModel(*this));
+    }
+
+    CircuitElementModelMeta getMeta() const { return this->meta; }
+    int getAngle() const {return this->angle;}
+    QRect getCellsRect() const {return this->cells_rect;}
+    QPoint getCenter() const {return this->center;}
+    QHash<QPoint, InputPointData> getInputPoints() const { return this->inputs_points; }
 
 private:
+    CircuitElementModelMeta meta;
     int angle; // 0, 1, 2 or 3
     QRect cells_rect;
     QHash<QPoint, InputPointData> inputs_points;
@@ -161,6 +186,7 @@ signals:
     void centerChanged(QPoint);
 
 public slots:
+    void setMeta(const CircuitElementModelMeta &meta) { this->meta = meta; }
     void setAngle(int angle) {this->angle = angle;}
     void setCellsRect(const QRect &cells_rect) {this->cells_rect = cells_rect;}
     void setInputsPoints(const QHash<QPoint, InputPointData> &inputs_points) {this->inputs_points = inputs_points;}

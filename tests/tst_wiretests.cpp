@@ -2,7 +2,7 @@
 #include <QHash>
 #include <QList>
 
-#include "../gui/field/wire/wiremodel.h"
+#include "/field/wire/wiremodel.h"
 
 // add necessary includes here
 

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QGraphicsSceneMouseEvent>
 
-#include "fieldselectmodecontroller.h"
+#include "field/edit_modes/fieldselectmodecontroller.h"
 
 class FieldDeleteModeController : public FieldSelectModeController
 {

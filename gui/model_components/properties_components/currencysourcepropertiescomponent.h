@@ -1,8 +1,8 @@
 #ifndef CURRENCYSOURCEPROPERTIESCOMPONENT_H
 #define CURRENCYSOURCEPROPERTIESCOMPONENT_H
 
-#include "fieldelementpropertiescomponent.h"
-#include "../../libs/objectcounter.h"
+#include "model_components/properties_components/fieldelementpropertiescomponent.h"
+#include "libs/objectcounter.h"
 
 class CurrencySourcePropertiesComponent : public FieldElementPropertiesComponent, public ObjectCounter<CurrencySourcePropertiesComponent>
 {

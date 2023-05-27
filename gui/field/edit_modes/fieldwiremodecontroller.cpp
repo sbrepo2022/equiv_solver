@@ -63,7 +63,7 @@ void FieldWireModeController::finishWire()
     FieldModel *field_model = this->getCurrentFieldModel();
 
     if (field_model != nullptr && this->buffer_wire != nullptr) {
-        field_model->addWireElementWithMerge(new WireModel(*(this->buffer_wire)));
+        field_model->addWireElementWithMerge(this->buffer_wire->copy());
     }
 
     this->clearBufferWire();

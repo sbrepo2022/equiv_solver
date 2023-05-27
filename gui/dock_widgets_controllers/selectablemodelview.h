@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
-#include "../model_components/selectablemodelcomponentskeeper.h"
+#include "model_components/selectablemodelcomponentskeeper.h"
 
 class SelectableModelView : public QObject
 {

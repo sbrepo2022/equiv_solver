@@ -5,6 +5,13 @@ CONFIG += c++14
 TARGET = tests
 TEMPLATE = app
 
-SOURCES +=  tst_wiretests.cpp
+DEPENDS += gui
 
-include(../gui/gui.pri)
+SOURCES += tst_wiretests.cpp
+
+INCLUDEPATH = $$PWD
+
+# build dir settings
+OUT_PWD = $$OUT_PWD/..
+SUBPROJECT_DIR = tests
+include($$PWD/../build_dirs_settings.pri)

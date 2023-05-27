@@ -4,8 +4,8 @@
 #include <QWidget>
 #include <QFormLayout>
 
-#include "../widgetcomponent.h"
-#include "../../libs/formgenerator.h"
+#include "model_components/widgetcomponent.h"
+#include "libs/formgenerator.h"
 
 class PropertiesComponent : public WidgetComponent
 {

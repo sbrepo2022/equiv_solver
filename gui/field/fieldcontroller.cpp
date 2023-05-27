@@ -1,9 +1,10 @@
 #include "fieldcontroller.h"
-#include "../fieldstyledialog.h"
-#include "../circuitsettingsdialog.h"
+#include "fieldstyledialog.h"
+#include "circuitsettingsdialog.h"
 
 FieldController::FieldController(FieldView *field_view, QObject *parent) :
     QObject(parent),
+    SolverProvider(),
     field_view(field_view),
     current_field_model_id(-1),
     cell_size(QSizeF(16, 16)),
@@ -11,7 +12,15 @@ FieldController::FieldController(FieldView *field_view, QObject *parent) :
 {
     connect(this, &FieldController::gridSizeChanged, this, &FieldController::updateScene);
 
+    this->analog_solver_controller = new AnalogSolverController();
+    this->analog_solver_controller->init();
+
     registerEditModes();
+}
+
+FieldController::~FieldController()
+{
+    delete this->analog_solver_controller;
 }
 
 int FieldController::addFieldModel(FieldModel *field_model)
@@ -51,6 +60,9 @@ void FieldController::setCurrentFieldModel(int id)
     if (this->field_models.contains(id)) {
         this->current_field_model_id = id;
         if (this->field_view != nullptr) this->field_view->setScene(this->field_models[id]->getScene());
+
+        this->analog_solver_controller->setCurrentFieldModel(this->field_models[id]);
+
         this->updateScene();
     }
     else {

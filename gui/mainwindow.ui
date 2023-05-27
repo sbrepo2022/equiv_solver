@@ -82,7 +82,7 @@
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -133,6 +133,7 @@
     <property name="title">
      <string>Solver</string>
     </property>
+    <addaction name="actionSolverSettings"/>
     <addaction name="actionSolve"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -418,6 +419,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionSolverSettings">
+   <property name="text">
+    <string>Solver settings</string>
    </property>
   </action>
  </widget>

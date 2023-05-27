@@ -35,6 +35,8 @@ void FormGenerator::generateForm(QWidget *parent_widget, QFormLayout *layout, co
                 spin->setMinimum(prop_elem["min"].toDouble());
             if (prop_elem.find("max") != prop_elem.end())
                 spin->setMaximum(prop_elem["max"].toDouble());
+            if (prop_elem.find("decimals") != prop_elem.end())
+                spin->setDecimals(prop_elem["decimals"].toInt());
             spin->setValue(prop_val.toDouble());
             connect(spin, &QDoubleSpinBox::valueChanged, props_owner, [=](double val) {
                 props_owner->setProperty(prop_elem["name"].toString().toStdString().c_str(), val);

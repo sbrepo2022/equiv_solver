@@ -6,7 +6,7 @@
 #include <QHash>
 #include <QGraphicsSceneMouseEvent>
 
-#include "fieldelementmodel.h"
+#include "field/fieldelementmodel.h"
 
 class FieldScene : public QGraphicsScene
 {

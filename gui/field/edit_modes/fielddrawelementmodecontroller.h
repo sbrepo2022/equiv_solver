@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "fieldeditmodecontroller.h"
-#include "../circuit/circuitelementmodel.h"
+#include "field/edit_modes/fieldeditmodecontroller.h"
+#include "field/circuit/circuitelementmodel.h"
 
 class FieldDrawElementModeController : public FieldEditModeController
 {

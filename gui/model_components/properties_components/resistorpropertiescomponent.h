@@ -1,8 +1,8 @@
 #ifndef RESISTORPROPERTIESCOMPONENT_H
 #define RESISTORPROPERTIESCOMPONENT_H
 
-#include "fieldelementpropertiescomponent.h"
-#include "../../libs/objectcounter.h"
+#include "model_components/properties_components/fieldelementpropertiescomponent.h"
+#include "libs/objectcounter.h"
 
 class ResistorPropertiesComponent : public FieldElementPropertiesComponent, public ObjectCounter<ResistorPropertiesComponent>
 {
